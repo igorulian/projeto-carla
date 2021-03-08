@@ -1,50 +1,62 @@
-const algorithmia = require('algorithmia')
-const algorithmiaApiKey = require('../../cred.json').algorithmiaApiKey
 const axios = require('axios')
 
+const dev = require('../services/log')
+
 const speak = require('../services/speak')
+
+require('dotenv').config()
 
 const wiki = require('wikijs').default;
 
 
 module.exports = {
     async pesquisar(action) {
-        console.log(action)
-        // const treatedSearch = treatSearch(action)
-        // const searchResult = await search(treatedSearch)
+        dev.log(action)
         if(action.verbSaid === 'qual'){
 
             if(action.tcommand.includes('previsão do tempo')){
-                const prevTempResult = await prevTempo(action)
+                const tempResponse = await prevTempo(action)
+                const txt = `A previsão é de ${tempResponse.txt} temperatura máxima de ${tempResponse.tmax} e mínima de ${tempResponse.tmin} com ${tempResponse.pchuva} % de chance de chuva`
+
+                speak.say(txt)
                 return
             }
 
             if(action.tcommand.includes('preço') && action.tcommand.includes('dólar')){
-                const dolarResult = await precoDoDolar(action)
-                const real = dolarResult.split('.')[0]
-                const cent = (dolarResult.split('.')[1] / 100)
-                const cent2 = String(cent).split('.')[0]
-                speak.say(`O Dólar atualmente está em ${real} reais e ${cent2} centavos`)
+                const dolarResponse = await precoDoDolar(action)
+
+                const txt = `O Dólar atualmente está em ${dolarResponse.real} reais e ${dolarResponse.centavo} centavos`
+                speak.say(txt)
+                return
             }
         }
     }
 }
 
 const prevTempo = async(action) => {
-    // if(action.tcommand.includes('amanhã')){
-    //     // prev amanhã
-    //     console.log('prev amanhã')
-    // }
-    if(action.tcommand.includes('hoje')){
-        // const response = await axios.get('https://api.hgbrasil.com/weather?woeid=425817key=ad6a0f10')
-        //http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/15?token=your-app-token
-        const response = await axios.get('http://apiadvisor.climatempo.com.br/api/v1/climate/rain/locale/3477?token= e87eb9153756cf01fea2a4bb31afa92a')
-        // const data = {
-        //     temp: response.data.results.temp,
-        //     description: response.data.results.description,
-        // }
-        console.log(response.data)
+
+    let dia = 0
+    if(action.tcommand.includes('hoje')) dia = 0
+    if(action.tcommand.includes('amanhã')) dia = 1
+    if(action.tcommand.includes('amanhã') && action.tcommand.includes('depois')) dia = 2
+
+    const response = await axios.get(`http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/4388/days/15?token=${process.env.CLIMATEMPO_TOKEN}`)
+    
+    const tmax = response.data.data[dia].temperature.max
+    const tmin = response.data.data[dia].temperature.min
+    const pchuva = response.data.data[dia].rain.probability
+    const txt = response.data.data[dia].text_icon.text.pt
+
+    const clima = {
+        tmax,
+        tmin,
+        pchuva,
+        txt
     }
+
+    dev.log(clima)
+    return clima
+    
 
 }
 
@@ -52,7 +64,17 @@ const precoDoDolar = async(action) => {
 
     const response = await axios.get('https://economia.awesomeapi.com.br/all/USD-BRL')
     const dolar = response.data.USD.bid
-    return dolar
+
+    const real = dolar.split('.')[0]
+    const cent = (dolar.split('.')[1] / 100)
+    const cent2 = String(cent).split('.')[0]
+
+    const dolarResponse = {
+        real,
+        centavo: cent2,
+    }
+
+    return dolarResponse
 
 }
 

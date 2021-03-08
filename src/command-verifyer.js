@@ -1,6 +1,8 @@
 const pesquisar = ['pesquisar','pesquisa', 'pesquise', 'procure', 'procura', 'qual', 'quem', 'o que', 'quanto']
 const acender = ['acender','acende', 'acenda', 'Cíntia']
 
+const dev = require('./services/log')
+
 const verbs = [pesquisar, acender]
 
 
@@ -27,7 +29,7 @@ const treatCommand = (command) => { // return treated command, with verb and tex
         tcommand,
         fullCommand: command
     }
-    console.log(treatedCommand)
+    dev.log(treatedCommand)
     return treatedCommand
 }
 
@@ -38,7 +40,7 @@ module.exports = {
         const treatedCommand = treatCommand(cmdLower) 
 
         if(!treatedCommand){
-            console.log('Nenhuma ação encontrada, tente novamente...')
+            dev.log('Nenhuma ação encontrada, tente novamente...')
             return
         }
         return treatedCommand

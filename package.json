@@ -7,9 +7,12 @@
     "@google-cloud/speech": "^4.2.0",
     "algorithmia": "^0.3.10",
     "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
     "node-record-lpcm16": "^1.0.1",
+    "package.json": "^2.0.1",
     "say": "^0.16.0",
-    "wikijs": "^6.0.1"
+    "wikijs": "^6.0.1",
+    "yarn": "^1.22.10"
   },
   "scripts": {
     "start": "$env:GOOGLE_APPLICATION_CREDENTIALS='./cred.json' && node main.js"

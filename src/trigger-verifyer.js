@@ -1,4 +1,5 @@
 const name = ['Carla','carla','Karla','karla']
+const dev = require('./services/loglog')
 
 const checkTrigger = (text) => {
     let trigger = ''
@@ -15,19 +16,19 @@ const checkTrigger = (text) => {
 module.exports = { 
     verify(text){
         const words = text.toLowerCase().split(' ')
-        console.log(words)
+        dev.log(words)
 
         const trigger = checkTrigger(text)
 
         if(!trigger){
-            console.log('sem trigger')
+            dev.log('sem trigger')
             return
         }else{
-            console.log(`trigger = ${trigger}`)
+            dev.log(`trigger = ${trigger}`)
         }
 
         const command = text.split(trigger)[1].replace(',','').trim()
-        console.log(`Command: ${command}`)
+        dev.log(`Command: ${command}`)
         return command
         // cmd.verify(command)
     }
