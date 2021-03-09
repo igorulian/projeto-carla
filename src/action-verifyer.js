@@ -1,4 +1,5 @@
 const pesquisar = require('./actions/search')
+const calculo = require('./actions/calculate')
 
 module.exports = {
     verify(action) {
@@ -7,6 +8,9 @@ module.exports = {
         switch (actVerb){
             case 'pesquisar':
                 pesquisar.pesquisar(action)
+                break
+            case 'calcular':
+                calculo.calcular(action)
                 break
             case 'acender':
                 break

@@ -1,9 +1,10 @@
-const pesquisar = ['pesquisar','pesquisa', 'pesquise', 'procure', 'procura', 'qual', 'quem', 'o que', 'quanto']
+const pesquisar = ['pesquisar','pesquisa', 'pesquise', 'pesquisou','procure', 'procura', 'qual', 'quem', 'o que', 'quando']
 const acender = ['acender','acende', 'acenda', 'Cíntia']
+const calcular = ['calcular', 'calcula', 'calcule', 'quanto']
 
 const dev = require('./services/log')
 
-const verbs = [pesquisar, acender]
+const verbs = [pesquisar, acender, calcular]
 
 
 const checkVerb = (command) => { // check what verb is this command about
@@ -21,7 +22,7 @@ const checkVerb = (command) => { // check what verb is this command about
 
 const treatCommand = (command) => { // return treated command, with verb and text
     const verb = checkVerb(command)
-    if(!verb) return null
+    if(!verb || !verb.action) return null
     const tcommand = command.replace(verb.verbSaid, '').trim()
     const treatedCommand = {
         action: verb.action,

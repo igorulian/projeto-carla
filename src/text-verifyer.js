@@ -9,7 +9,7 @@ module.exports = {
         if(!command){console.log('ERRO: command undefined'); return;}
 
         const action = cmd.verify(command)
-        if(!command){console.log('Action undefined'); return;}
+        if(!action){console.log('Action undefined'); return;}
 
         act.verify(action)
     }

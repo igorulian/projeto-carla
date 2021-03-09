@@ -1,5 +1,6 @@
-const name = ['Carla','carla','Karla','karla']
-const dev = require('./services/loglog')
+// const name = ['Carla','carla','Karla','karla']
+const name = ['Linda','linda']
+const dev = require('./services/log')
 
 const checkTrigger = (text) => {
     let trigger = ''
