@@ -8,9 +8,10 @@
     "algorithmia": "^0.3.10",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
+    "fs": "^0.0.1-security",
+    "ibm-watson": "^6.0.3",
     "node-record-lpcm16": "^1.0.1",
     "package.json": "^2.0.1",
-    "say": "^0.16.0",
     "wikijs": "^6.0.1",
     "yarn": "^1.22.10"
   },
