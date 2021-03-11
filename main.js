@@ -2,7 +2,7 @@ const recorder = require('node-record-lpcm16');
 
 // Imports the Google Cloud client library
 const speech = require('@google-cloud/speech');
-
+require('dotenv').config()
 const check = require('./src/text-verifyer')
 
 // Creates a client

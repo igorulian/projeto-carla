@@ -2,6 +2,7 @@ const fs = require('fs')
 const dev = require('../services/log')
 const textToSpeech = require('@google-cloud/text-to-speech');
 const util = require('util');
+const spawn = require("child_process").spawn;
 
 const client = new textToSpeech.TextToSpeechClient();
 
@@ -9,11 +10,9 @@ require('dotenv').config()
 
 module.exports = {
     async say(text) {
-
-        await gerarAudioGoogle(text)
-
-        await playAudio()
-    
+        // await gerarAudioGoogle(text)
+        // await playAudio()
+        playAudiioBypyttsx3(text)
     }
 }
 
@@ -81,10 +80,22 @@ async function gerarAudioIBM(text){
 
 async function playAudio(){
   dev.log('Playando audio...')
-  const spawn = require("child_process").spawn;
   // const pythonProcess = spawn('python',["./play-audio.py"]);
   console.log(__dirname + ' -> ' + '/play-audio.py')
   spawn("C:/Users/IgorU/AppData/Local/Programs/Python/Python39/python.exe",[`.${__dirname}/play-audio.py`]);
 }
 
-// playAudio(
+
+function playAudiioBypyttsx3(text) {
+  // const pythonProcess = spawn('python',["./play-audio.py"]);
+  const path = `${__dirname}\\speak.py`
+  // console.log(path)
+
+  const txt = text.split(' ')
+
+  const pythonProcess = spawn("C:/Users/IgorU/AppData/Local/Programs/Python/Python39/python.exe",[path, txt]);
+
+  // pythonProcess.stdout.on('data', (data) => {
+  //    dev.log(data)
+  // });
+}
