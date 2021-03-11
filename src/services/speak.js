@@ -12,12 +12,7 @@ module.exports = {
 
         await gerarAudioGoogle(text)
 
-        // Fazer tocar o audio
-        dev.log('Tocando...')
-        var audio = new Audio('./src/audio/audio.mp3')
-        audio.play()
-        dev.log('Audio tocado')
-      
+        await playAudio()
     
     }
 }
@@ -40,6 +35,8 @@ async function gerarAudioGoogle(text) {
   const [response] = await client.synthesizeSpeech(request);
   // Write the binary audio content to a local file
   const writeFile = util.promisify(fs.writeFile);
+  // console.log(response.audioContent)
+  // console.log(__dirname)
   await writeFile('./src/audio/audio.mp3', response.audioContent, 'binary');
 
   console.log('Audio GOOGLE Gerado!');
@@ -83,8 +80,11 @@ async function gerarAudioIBM(text){
 
 
 async function playAudio(){
-  var audio = new Audio('./src/audio/audio.mp3');
-  audio.play();
+  dev.log('Playando audio...')
+  const spawn = require("child_process").spawn;
+  // const pythonProcess = spawn('python',["./play-audio.py"]);
+  console.log(__dirname + ' -> ' + '/play-audio.py')
+  spawn("C:/Users/IgorU/AppData/Local/Programs/Python/Python39/python.exe",[`.${__dirname}/play-audio.py`]);
 }
 
-playAudio()
+// playAudio(
