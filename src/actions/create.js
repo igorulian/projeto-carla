@@ -7,7 +7,7 @@ module.exports = {
     criar(action){
         if(action.tcommand.includes('lembrete')){
             const lembrete = identificarLembrete(action)
-            if(!lembrete.horario || !lembrete.titulo || !lembrete.diario){
+            if(!lembrete){
                 speak.say('Desculpe, não consegui entender os parâmentros do lembrete')
                 return
             }
