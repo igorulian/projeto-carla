@@ -1,5 +1,6 @@
 const pesquisar = require('./actions/search')
 const calculo = require('./actions/calculate')
+const criar = require('./actions/create')
 
 module.exports = {
     verify(action) {
@@ -12,7 +13,10 @@ module.exports = {
             case 'calcular':
                 calculo.calcular(action)
                 break
-            case 'acender':
+            case 'criar':
+                criar.criar(action)
+                break
+            case 'ligar':
                 break
             default:
 

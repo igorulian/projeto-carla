@@ -12,7 +12,8 @@ module.exports = {
     async say(text) {
         // await gerarAudioGoogle(text)
         // await playAudio()
-        playAudiioBypyttsx3(text)
+        playAudioPython(text)
+        dev.log(text)
     }
 }
 
@@ -86,16 +87,14 @@ async function playAudio(){
 }
 
 
-function playAudiioBypyttsx3(text) {
-  // const pythonProcess = spawn('python',["./play-audio.py"]);
+function playAudioPython(text) {
   const path = `${__dirname}\\speak.py`
-  // console.log(path)
 
-  const txt = text.split(' ')
+  let txt = text
+  txt = txt.replace(',', '') 
+  txt = txt.split(' ')
 
   const pythonProcess = spawn("C:/Users/IgorU/AppData/Local/Programs/Python/Python39/python.exe",[path, txt]);
+  // console.log(pythonProcess)
 
-  // pythonProcess.stdout.on('data', (data) => {
-  //    dev.log(data)
-  // });
 }

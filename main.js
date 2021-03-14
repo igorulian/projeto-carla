@@ -1,5 +1,4 @@
 const recorder = require('node-record-lpcm16');
-
 // Imports the Google Cloud client library
 const speech = require('@google-cloud/speech');
 require('dotenv').config()
@@ -18,6 +17,8 @@ const languageCode = 'pt-BR';
 // const encoding = 'Encoding of the audio file, e.g. LINEAR16';
 // const sampleRateHertz = 16000;
 // const languageCode = 'BCP-47 language code, e.g. en-US';
+
+console.log('pepimo')
 
 const request = {
   config: {

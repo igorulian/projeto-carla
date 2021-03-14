@@ -1,10 +1,11 @@
 const pesquisar = ['pesquisar','pesquisa', 'pesquise', 'pesquisou','procure', 'procura', 'qual', 'quem', 'o que', 'quando']
-const acender = ['acender','acende', 'acenda', 'Cíntia']
+const ligar = ['ligar','ligue','acender','acende', 'acenda', 'Cíntia']
 const calcular = ['calcular', 'calcula', 'calcule', 'quanto']
+const criar = ['criar', 'cria', 'crie', 'adicione', 'adicionar','adiciona','quero', 'queria']
 
 const dev = require('./services/log')
 
-const verbs = [pesquisar, acender, calcular]
+const verbs = [pesquisar, ligar, calcular, criar]
 
 
 const checkVerb = (command) => { // check what verb is this command about

@@ -34,13 +34,14 @@ module.exports = {
 
 
             // pesquisa geral
-
-            speak.say('Pesquisando...')
-            const pesquisaRsponse = await pesquisaGeral(action)
-            if(!pesquisaRsponse){dev.log('ERRO ao pesquisar'); speak.say('Não foi possivel encontrar nada sobre o assunto.'); return;}
-            
-            speak.say(pesquisaRsponse)
-            return
+            if(action.tcommand.includes('sobre')){
+                speak.say('Pesquisando...')                                    // https://rapidapi.com/apigeek/api/google-search3/pricing  -< TESTA DPS ESSA API
+                const pesquisaRsponse = await pesquisaGeral(action)
+                if(!pesquisaRsponse){dev.log('ERRO ao pesquisar'); speak.say('Não foi possivel encontrar nada sobre o assunto.'); return;}
+                
+                speak.say(pesquisaRsponse)
+                return
+            }
 
 
         
