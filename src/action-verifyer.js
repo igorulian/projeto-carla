@@ -16,6 +16,9 @@ module.exports = {
             case 'criar':
                 criar.criar(action)
                 break
+            case 'remover':
+                criar.criar(action)
+                break
             case 'ligar':
                 break
             default:

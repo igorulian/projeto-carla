@@ -91,7 +91,8 @@ function playAudioPython(text) {
   const path = `${__dirname}\\speak.py`
 
   let txt = text
-  txt = txt.replace(',', '') 
+  txt = txt.replace(':30', 'e meia')
+  txt = txt.replace(',', '.') 
   txt = txt.split(' ')
 
   const pythonProcess = spawn("C:/Users/IgorU/AppData/Local/Programs/Python/Python39/python.exe",[path, txt]);
