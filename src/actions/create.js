@@ -21,7 +21,7 @@ module.exports = {
 
 function removerLembrete(action) {
 
-    const horaASerRemovida = extrairHora(action)
+    const horaASerRemovida = pegarHora(action)
     
     const jsonData = fs.readFileSync(path, 'utf-8')
     const lembretes = JSON.parse(jsonData);
@@ -52,12 +52,14 @@ function adicionarLembrete(action){
     let lembrete = {
         horario: '',
         titulo: '',
+        dia: '',
         diario: false
     }
 
-    lembrete.horario = extrairHora(action)
+    lembrete.horario = pegarHora(action)
     lembrete.titulo = pegarTitulo(action)
     lembrete.diario = pegarDiario(action)
+    lembrete.dia = pegarDia(action)
 
     dev.log(lembrete)
 
@@ -86,28 +88,28 @@ async function criarLembrete(lembrete){
 function pegarTitulo(action){
     let titulo = action.tcommand
     titulo = titulo.replace('título', 'titulo')
-    let bagulhos = ['das', 'às', 'as', 'para as', 'para às']
+    let palavraFinal = ['das', 'às', 'para', 'as', 'para às']
 
     let temTitulo = false
 
-    if(titulo.includes('titulo')){
-        titulo = titulo.split('titulo')[1]
-        titulo = titulo.trim()
-        temTitulo = true
-    }
+    let titulonome = ['titulo', 'nome']
 
-    if(titulo.includes('nome')){
-        titulo = titulo.split('nome')[1]
-        titulo = titulo.trim()
-        temTitulo = true
-    }
-
-    bagulhos.map(bagulho => {
-        if(titulo.includes(bagulho)){
-            titulo = titulo.split(bagulho)[0]
+    titulonome.map(titulonome => {
+        if(titulo.includes(titulonome)){
+            titulo = titulo.split(titulonome)[1]
+            titulo = titulo.trim()
             temTitulo = true
+            return
         }
     })
+
+    palavraFinal.map(bagulho => {
+        if(titulo.split(' ').includes(bagulho)){
+            titulo = titulo.split(bagulho)[0]
+        }
+    })
+
+    titulo = titulo.trim()
 
     return temTitulo ? titulo : ''
 
@@ -125,19 +127,36 @@ function pegarDiario(action){
     }
 }
 
-function extrairHora(action){
+function pegarDia(action){
+    let dia = action.tcommand
+    const diaAtual = new Date().getDate()
+    let mesAtual = new Date().getMonth()
+    mesAtual = parseInt(mesAtual) + 1
+
+    if(dia.includes('amanhã')){              // isso provavelmente vai dar ruim se o dia for tipo.. dia 30 ou 29, mas deixa para lá ja ta bom
+        dia = (parseInt(diaAtual) + 1) + '/' + mesAtual
+    }else{
+        dia = diaAtual + '/' + mesAtual
+    }
+
+    return dia
+}
+
+function pegarHora(action){
 
     let horario = ''
-    let bagulhos = ['das', 'às', 'as', 'para as', 'para às']
+    let bagulhos = ['das', 'às', 'as', 'para', 'para às']
 
     bagulhos.map(bagulho => {
-        if(action.tcommand.includes(bagulho)){
+        if(action.tcommand.split(' ').includes(bagulho)){
             horario = action.tcommand.split(bagulho)[1]
             return
         }
     })
 
     horario = horario.replace('horas', ':00')
+    horario = horario.replace('meio-dia', '12')
+    horario = horario.replace('e meia', ':30')
 
     let h1 = horario.split(':')[0].trim()
     let h2 = horario.split(':')[1].trim()
