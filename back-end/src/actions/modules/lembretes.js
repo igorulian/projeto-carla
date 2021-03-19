@@ -1,75 +1,84 @@
-const answer = require('../services/answer')
-const speak = require('../services/speak')
+const speak = require('../../services/speak')
 const fs = require("fs");
-const dev = require('../services/log')
+const dev = require('../../services/log')
 
 const path = `./src/data/lembretes.json`
 
 module.exports = {
-    criar(action){
-        if(action.tcommand.includes('lembrete')){
-            console.log(action.action)
-            if(action.action === 'remover'){
-                try{    removerLembrete(action)     }catch(err) {speak.say('Ocorreu um erro ao remover o lembrete, tente novamente...'); dev.log(err); return;}
-            }else{
-                try{    adicionarLembrete(action)   }catch(err) {speak.say('Ocorreu um erro ao criar o lembrete, tente novamente...');  dev.log(err); return;}
-            }
-        }
-        
-    }
+    executar(action){
+        const act = action.action
+        if(act === 'criar')
+            adicionarLembrete(action)
+        else 
+            removerLembrete(action)
+
+    },
 }
 
+
 function removerLembrete(action) {
+    try{
+        const horaASerRemovida = pegarHora(action)
+        
+        const jsonData = fs.readFileSync(path, 'utf-8')
+        const lembretes = JSON.parse(jsonData);
 
-    const horaASerRemovida = pegarHora(action)
-    
-    const jsonData = fs.readFileSync(path, 'utf-8')
-    const lembretes = JSON.parse(jsonData);
+        let lembreteEncontrado = false
+        let novosLembretes = []
 
-    let lembreteEncontrado = false
-    let novosLembretes = []
+        lembretes.map(lembrete => {
+            console.log(lembrete)
 
-    lembretes.map(lembrete => {
-        console.log(lembrete)
+            if(lembrete.horario !== horaASerRemovida)
+                novosLembretes.push(lembrete)
+            else
+                lembreteEncontrado = true
 
-        if(lembrete.horario !== horaASerRemovida)
-            novosLembretes.push(lembrete)
-        else
-            lembreteEncontrado = true
+            return 
+        })
 
-        return 
-    })
+        fs.writeFileSync(path, JSON.stringify(novosLembretes, null, 4))
 
-    fs.writeFileSync(path, JSON.stringify(novosLembretes, null, 4))
+        return lembreteEncontrado ? 
+        speak.say(`Lembrete das ${horaASerRemovida} removido com sucesso!`) 
+        : speak.say('Não foi possível localizar o lembrete, tente novamente...')
 
-    return lembreteEncontrado ? 
-    speak.say(`Lembrete das ${horaASerRemovida} removido com sucesso!`) 
-    : speak.say('Não foi possível localizar o lembrete, tente novamente...')
+    }catch(err) {
+        speak.say('Ocorreu um erro ao remover o lembrete, tente novamente...');
+        dev.log(err); 
+        return;
+    }
     
 }
 
 function adicionarLembrete(action){
-    let lembrete = {
-        horario: '',
-        titulo: '',
-        dia: '',
-        diario: false
+    try{
+        let lembrete = {
+            horario: '',
+            titulo: '',
+            dia: '',
+            diario: false
+        }
+
+        lembrete.horario = pegarHora(action)
+        lembrete.titulo = pegarTitulo(action)
+        lembrete.diario = pegarDiario(action)
+        lembrete.dia = pegarDia(action)
+
+        dev.log(lembrete)
+
+        if(!lembrete){
+            speak.say('Desculpe, não consegui entender os parâmentros do lembrete')
+            return
+        }
+
+        criarLembrete(lembrete)
+        speak.say(`Lembrete para às ${lembrete.horario} salvo com sucesso!`)
+    }catch(err) {
+        speak.say('Ocorreu um erro ao criar o lembrete, tente novamente...');
+        dev.log(err);
+        return;
     }
-
-    lembrete.horario = pegarHora(action)
-    lembrete.titulo = pegarTitulo(action)
-    lembrete.diario = pegarDiario(action)
-    lembrete.dia = pegarDia(action)
-
-    dev.log(lembrete)
-
-    if(!lembrete){
-        speak.say('Desculpe, não consegui entender os parâmentros do lembrete')
-        return
-    }
-
-    criarLembrete(lembrete)
-    speak.say(`Lembrete para às ${lembrete.horario} salvo com sucesso!`)
 }
 
 async function criarLembrete(lembrete){
@@ -145,11 +154,11 @@ function pegarDia(action){
 function pegarHora(action){
 
     let horario = ''
-    let bagulhos = ['das', 'às', 'as', 'para', 'para às']
+    let conectores = ['das', 'às', 'as', 'para', 'para às']
 
-    bagulhos.map(bagulho => {
-        if(action.tcommand.split(' ').includes(bagulho)){
-            horario = action.tcommand.split(bagulho)[1]
+    conectores.map(conector => {
+        if(action.tcommand.split(' ').includes(conector)){
+            horario = action.tcommand.split(conector)[1]
             return
         }
     })

@@ -34,8 +34,10 @@ function checkLembrete(){
         const diaLembrete = parseInt(lembrete.dia.split('/')[0])
         const mesLembrete = parseInt(lembrete.dia.split('/')[1])
 
+        const soneca = 1
+
         if(
-            (horaLembrete === horarioAtual && (minutoLembrete === minutoAtual || minutoLembrete === minutoAtual + 1))
+            (horaLembrete === horarioAtual && (minutoLembrete === minutoAtual || minutoLembrete === minutoAtual + soneca))
             && (diaLembrete === diaAtual && mesLembrete === mesAtual)
             ){
             console.log("ALARMEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")

@@ -51,7 +51,7 @@ module.exports = {
             speak.say('Não consegui identificar o calculo desejado')
             return
         }
-        let txt = `${x} ${opdr} ${y} é igual a ${resultado.toFixed(2)}`
+        let txt = `${x} ${opdr} ${y} é igual a ${resultado}`
         txt = txt.replace('/', 'dividido por')
         txt = txt.replace('*', 'vezes')
         txt = txt.replace('+', 'mais')

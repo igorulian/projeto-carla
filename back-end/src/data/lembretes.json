@@ -1,0 +1,14 @@
+[
+    {
+        "horario": "20:30",
+        "titulo": "lavar o pinto",
+        "dia": "19/3",
+        "diario": false
+    },
+    {
+        "horario": "20:30",
+        "titulo": "tomar remédio",
+        "dia": "18/3",
+        "diario": false
+    }
+]
