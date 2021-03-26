@@ -1,0 +1,53 @@
+import React, {Component} from 'react';
+import './CirculoCentral.css'
+
+export default class CirculoCentral extends Component{
+
+    render(){
+        return(  
+            <div class="container">
+
+                {/* <div class="first">
+                    <div class="leftcontainer">
+                        <nav class="nav" id="lnav">
+                            <ul>
+                                <li><a href="#">Usability / A/B Testing </a></li>
+                                <li><a href="#">Interface Designing</a></li>
+                                <li><a href="#">User Research</a></li>
+                                <li><a href="#">Rapid Prototyping</a></li>    
+                                <li><a href="#">Wire-Framing design</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div> */}
+
+                {/* <div class="second"> */}
+                    <div id="loader-wrapper">
+                        <div id="loader">
+                            <div id="loader1"> 
+                            </div> 
+                        </div>
+                    <p style={{marginLeft: '48px', fontSize: '40px'}}>L.I.N.D.A</p>
+                {/* </div> */}
+
+                {/* <div class="third">
+                    <div class="rightcontainer">
+                        <nav class="nav navr"  id="rnav">
+                            <ul>
+                                <li><a href="#">CSS3,Sass,Less,Bootstrap</a></li>
+                                <li><a href="#"> JavaScript, JQuery </a></li>
+                                <li><a href="#">HTML/HTML5</a></li>
+                                <li><a href="#">AngularJS,React,D3</a></li>
+                                <li><a href="#">Photoshop, Illustrator</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div> */}
+            </div>
+        </div>
+
+        )
+    }
+
+
+}
