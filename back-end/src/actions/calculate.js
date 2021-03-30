@@ -1,5 +1,5 @@
 
-const dev = require('../services/log')
+const dev = require('../services/dev')
 const speak = require('../services/speak')
 
 module.exports = {

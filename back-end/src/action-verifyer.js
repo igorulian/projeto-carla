@@ -1,6 +1,7 @@
 const pesquisar = require('./actions/search')
 const calculo = require('./actions/calculate')
 const criar = require('./actions/create')
+const tocar = require('./actions/tocar')
 
 module.exports = {
     verify(action) {
@@ -20,6 +21,9 @@ module.exports = {
                 criar.criar(action)
                 break
             case 'ligar':
+                break
+            case 'tocar':
+                tocar.tocar(action)
                 break
             default:
 

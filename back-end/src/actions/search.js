@@ -1,6 +1,6 @@
 const axios = require('axios')
 var Algorithmia = require("algorithmia");
-const dev = require('../services/log')
+const dev = require('../services/dev')
 const speak = require('../services/speak')
 
 require('dotenv').config()

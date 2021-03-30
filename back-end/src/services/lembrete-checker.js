@@ -1,6 +1,6 @@
 const path = `./src/data/lembretes.json`
 const fs = require("fs");
-const dev = require('./log');
+const dev = require('./dev');
 const speak = require("./speak");
 
 module.exports = {

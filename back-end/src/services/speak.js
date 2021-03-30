@@ -1,5 +1,5 @@
 const fs = require('fs')
-const dev = require('../services/log')
+const dev = require('../services/dev')
 const textToSpeech = require('@google-cloud/text-to-speech');
 const util = require('util');
 const spawn = require("child_process").spawn;
@@ -10,10 +10,11 @@ require('dotenv').config()
 
 module.exports = {
     async say(text) {
-        // await gerarAudioGoogle(text)
-        // await playAudio()
         playAudioPython(text)
+        // gerarAudioIBM(text)
+        // gerarAudioGoogle(text)
         dev.log(text)
+        
     }
 }
 
@@ -37,7 +38,7 @@ async function gerarAudioGoogle(text) {
   const writeFile = util.promisify(fs.writeFile);
   // console.log(response.audioContent)
   // console.log(__dirname)
-  await writeFile('./src/audio/audio.mp3', response.audioContent, 'binary');
+  await writeFile('./src/audio/audioGOOGLE.mp3', response.audioContent, 'binary');
 
   console.log('Audio GOOGLE Gerado!');
 }
@@ -69,7 +70,9 @@ async function gerarAudioIBM(text){
         return textToSpeech.repairWavHeaderStream(response.result);
       })
       .then(buffer => {
-        fs.writeFileSync('outputIBM.mp3', buffer);
+        // fs.writeFileSync('./src/audio/audioIBM.mp3', buffer);
+        const writeFile = util.promisify(fs.writeFile);
+        writeFile('./src/audio/audioIBM.mp3', buffer);
       })
       .catch(err => {
         console.log('error:', err);

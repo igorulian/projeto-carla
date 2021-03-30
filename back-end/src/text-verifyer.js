@@ -1,7 +1,7 @@
 const cmd = require('./command-verifyer')
 const act = require('./action-verifyer')
 
-const dev = require('./services/log')
+const dev = require('./services/dev')
 
 module.exports = {
     checkText(text) {

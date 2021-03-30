@@ -3,10 +3,11 @@ const ligar = ['ligar','ligue','acender','acende', 'acenda', 'Cíntia']
 const calcular = ['calcular', 'calcula', 'calcule', 'quanto']
 const criar = ['criar', 'cria', 'crie', 'adicione', 'adicionar','adiciona','quero', 'queria']
 const remover = ['remover', 'remove', 'remova', 'deletar', 'delete', 'deleta']
+const tocar = ['tocar', 'toca', 'toque', 'coloca']
 
-const dev = require('./services/log')
+const dev = require('./services/dev')
 
-const verbs = [pesquisar, ligar, calcular, criar, remover]
+const verbs = [pesquisar, ligar, calcular, criar, remover, tocar]
 
 
 const checkVerb = (command) => { // verificar qual verbo se trata
@@ -25,7 +26,9 @@ const checkVerb = (command) => { // verificar qual verbo se trata
 const treatCommand = (command) => { // trata o comando e retorna em um objeto
     const verb = checkVerb(command)
     if(!verb || !verb.action) return null
-    const tcommand = command.replace(verb.verbSaid, '').trim()
+    let tcommand = command.replace(verb.verbSaid, '').trim()
+    // tcommand = tcommand.replace('por favor', '')
+    // tcommand = tcommand.replace('fazendo favor', '')
     const treatedCommand = {
         action: verb.action,
         verbSaid: verb.verbSaid,

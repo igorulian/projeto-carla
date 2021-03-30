@@ -1,6 +1,6 @@
 const speak = require('../../services/speak')
 const fs = require("fs");
-const dev = require('../../services/log')
+const dev = require('../../services/dev')
 
 const path = `./src/data/lembretes.json`
 

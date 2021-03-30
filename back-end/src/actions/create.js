@@ -1,5 +1,5 @@
 const speak = require('../services/speak')
-const dev = require('../services/log')
+const dev = require('../services/dev')
 const lembrete = require('./modules/lembretes')
 
 
