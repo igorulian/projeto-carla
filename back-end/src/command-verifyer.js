@@ -4,10 +4,11 @@ const calcular = ['calcular', 'calcula', 'calcule', 'quanto']
 const criar = ['criar', 'cria', 'crie', 'adicione', 'adicionar','adiciona','quero', 'queria']
 const remover = ['remover', 'remove', 'remova', 'deletar', 'delete', 'deleta']
 const tocar = ['tocar', 'toca', 'toque', 'coloca']
+const iniciar = ['iniciar', 'inicie', 'inicia', 'começar', 'começa', 'começe']
 
 const dev = require('./services/dev')
 
-const verbs = [pesquisar, ligar, calcular, criar, remover, tocar]
+const verbs = [pesquisar, ligar, calcular, criar, remover, tocar, iniciar]
 
 
 const checkVerb = (command) => { // verificar qual verbo se trata
