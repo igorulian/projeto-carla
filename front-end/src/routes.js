@@ -16,8 +16,8 @@ export default function MainRoutes(){
         <Routes>
             <Route path="/" element={<Main/>} />
             <Route path="/test" element={<Test/>} />
-            <Route path="/video" element={<VideoDisplay/>} />
-            <Route path="/recfacial" element={<FacialRecognition/>} />
+            <Route path="/video/:id" element={<VideoDisplay/>} />
+            <Route path="/recfacial/" element={<FacialRecognition/>} />
         </Routes>
     )
 }

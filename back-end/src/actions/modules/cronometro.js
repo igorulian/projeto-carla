@@ -2,11 +2,11 @@ const speak = require('../../services/speak')
 const dev = require('../../services/dev')
 
 module.exports = {
-    inciar(action){
+    async inciar(action){
         const res = pegarMinESeg(action)
         if(!res) return
+        await speak.say(res.txt)
         iniciarCronometro(res.min, res.seg)
-        speak.say(res.txt)
     }
 }
 
@@ -54,11 +54,12 @@ function pegarMinESeg(action){
     seg = seg.toString().trim()
     min = min.toString().trim()
 
-    let txt = 'Erro'
+    let txt = `Iniciando cronometro de ${min} minuto${min > 1 ? 's' : ''} e ${seg} segundo${seg > 1 ? 's' : ''}`
 
-    if(min > 0 && seg > 0){
-        txt = `Iniciando cronometro de ${min} minuto${min > 1 ? 's' : ''} e ${seg} segundo${seg > 1 ? 's' : ''}`
-    }else if (min > 0 && seg === 0){
+    seg = parseInt(seg)
+    min = parseInt(min)
+
+    if (min > 0 && seg === 0){
         txt = `Iniciando cronometro de ${min} minuto${min > 1 ? 's' : ''}`
     }else if (seg > 0 && min === 0 ){
         txt = `Iniciando cronometro de ${seg} segundo${seg > 1 ? 's' : ''}`
@@ -71,7 +72,23 @@ function pegarMinESeg(action){
     }
 }
 
-function iniciarCronometro(min, seg){
+async function iniciarCronometro(min, seg){
+    const ms = (min * 60 * 1000) + (seg * 1000)
+    dev.log('Começando a contar...')
+    await sleep(ms)
+    //só para pegar o txt bonitinho
 
-    dev.log('edadadadashdasdad')
+    let txt = `Cronometro de ${min} minuto${min > 1 ? 's' : ''} e ${seg} segundo${seg > 1 ? 's' : ''} finalizado!`
+
+    if (min > 0 && seg === 0){
+        txt = `Cronometro de ${min} minuto${min > 1 ? 's' : ''} finalizado!`
+    }else if (seg > 0 && min === 0 ){
+        txt = `Cronometro de ${seg} segundo${seg > 1 ? 's' : ''} finalizado!`
+    }
+
+    speak.say(txt)
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

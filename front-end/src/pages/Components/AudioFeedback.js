@@ -17,7 +17,7 @@ export default class AudioFeedback extends Component {
                     <AudioSpectrum
                             id={"audio-container"}
                             height={400}
-                            width={1345}
+                            width={1700}
                             audioId={'audio-element'}
                             capColor={'red'}
                             capHeight={0}
