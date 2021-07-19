@@ -1,5 +1,5 @@
 import recorder from 'node-record-lpcm16'
-import {listenCommand} from './speech-recognition.js'
+import {listenCommand} from './command-recognition.js'
 import {SpeechClient} from '@google-cloud/speech'
 
 let isTrigged = false
@@ -24,20 +24,27 @@ const trigger = 'linda'
         
       const recognizeStream = client.streamingRecognize(request)
 
-      recognizeStream.on('error', console.error)
+      recognizeStream.on('error', () => {
+        console.error
+        console.log("TENTANDO DNV....")
+        return triggerChecker()
+      })
 
       recognizeStream.on('data', async data => {
 
         if(isTrigged) return
 
         const {transcript:text} = data.results[0].alternatives[0]
+        const hasTrigger = text.toString().toLowerCase().includes('linda')
 
-        if(text.toString().toLowerCase().includes('linda')){
+        if(hasTrigger){
+          console.log(`✅ Trigger encontrado`)
+
           isTrigged = true
-          console.log(`\nTRIGGER:`)
           await listenCommand()
           isTrigged = false
-          console.log(`\nACABOU TRIGGER:`)
+
+          console.log('⏰ Aguardando Trigger');
         }
 
       })
@@ -54,7 +61,7 @@ const trigger = 'linda'
         .on('error', console.error)
         .pipe(recognizeStream);
         
-      console.log('✔️ Trigger iniciado');
+      console.log('⏰ Aguardando Trigger');
   }
 
 export {triggerChecker}

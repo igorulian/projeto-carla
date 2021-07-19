@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const check = require('../text-verifyer')
+const check = require('../command-handler')
 
 module.exports = {
     log(txt){

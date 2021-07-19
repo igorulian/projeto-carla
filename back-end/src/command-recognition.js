@@ -1,14 +1,15 @@
 import recorder from 'node-record-lpcm16'
 import {SpeechClient} from '@google-cloud/speech'
-
+import {handleCommand} from './command-handler.js'
 
 async function listenCommand(timeout = 7000){
 
   return new Promise(resolve => {
     let timer;
 
-    function responseHandler() {
+    async function responseHandler(text) {
       pauseStream()
+      await handleCommand(text)
       resolve()
       clearTimeout(timer)
     }
@@ -43,7 +44,7 @@ async function listenCommand(timeout = 7000){
         console.log(`Command: ${text}`)
 
         //check.checkText(text)
-        responseHandler()
+        responseHandler(text)
 
       }
       );
@@ -64,12 +65,12 @@ async function listenCommand(timeout = 7000){
         .on('error', console.error)
         .pipe(recognizeStream)
         
-      console.log('✔️ Reconhecimento de voz iniciado')
+      console.log('✔️ Ouvindo comando')
 
     // Command Handler
 
     timer = setTimeout(() => {
-      responseHandler()
+      responseHandler('')
     }, timeout)
 
 

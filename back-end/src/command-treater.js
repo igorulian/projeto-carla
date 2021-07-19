@@ -6,12 +6,10 @@ const remover = ['remover', 'remove', 'remova', 'deletar', 'delete', 'deleta']
 const tocar = ['tocar', 'toca', 'toque', 'coloca']
 const iniciar = ['iniciar', 'inicie', 'inicia', 'começar', 'começa', 'começe']
 
-const dev = require('./services/dev')
-
 const verbs = [pesquisar, ligar, calcular, criar, remover, tocar, iniciar]
 
 
-const checkVerb = (command) => { // verificar qual verbo se trata
+const getVerb = (command) => { 
     for(let y = 0; y < verbs.length; y++){
         const verb = verbs[y]
 
@@ -21,35 +19,37 @@ const checkVerb = (command) => { // verificar qual verbo se trata
             }
         }
     }
-    return null
+    return {action: null, verbSaid: null}
 }
 
-const treatCommand = (command) => { // trata o comando e retorna em um objeto
-    const verb = checkVerb(command)
-    if(!verb || !verb.action) return null
-    let tcommand = command.replace(verb.verbSaid, '').trim()
-    // tcommand = tcommand.replace('por favor', '')
-    // tcommand = tcommand.replace('fazendo favor', '')
+const getTreatCommand = (command,verb) => {
+    let tcommand = command.replace(verb.verbSaid, '')
+    tcommand = tcommand.toLowerCase()
+    tcommand = tcommand.trim()
+    // adicionar qualquer palavra para ser excluida
+    // tcommand = tcommand.replace('x', ')
+    return tcommand
+}
+
+const treatCommand = (command) => {
+    const verb = getVerb(command)
+    const treatCommand = getTreatCommand(command,verb)
+
+
     const treatedCommand = {
         action: verb.action,
         verbSaid: verb.verbSaid,
-        tcommand,
+        treatCommand,
         fullCommand: command
     }
-    dev.log(treatedCommand)
+
+    console.log(treatedCommand)
+
+    if(!treatedCommand.action || !treatedCommand.verbSaid || !treatedCommand.treatCommand || !treatedCommand.fullCommand) 
+        return null
+
     return treatedCommand
 }
 
-module.exports = {
-    verify(command) {
-        const cmdLower = command.toLowerCase()
 
-        const treatedCommand = treatCommand(cmdLower) 
-
-        if(!treatedCommand){
-            dev.log('Nenhuma ação encontrada, tente novamente...')
-            return
-        }
-        return treatedCommand
-    }
-}
+export {treatCommand}
