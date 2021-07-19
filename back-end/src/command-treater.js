@@ -14,7 +14,7 @@ const getVerb = (command) => {
         const verb = verbs[y]
 
         for(let x = 0; x < verb.length; x++){
-            if(command.includes(verb[x])){
+            if(command.toLowerCase().includes(verb[x])){
                 return {action: verb[0], verbSaid: verb[x]}
             }
         }
