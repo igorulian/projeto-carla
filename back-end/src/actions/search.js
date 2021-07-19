@@ -55,22 +55,27 @@ const prevTempo = async(action) => {
     if(action.tcommand.includes('amanhã')) dia = 1
     if(action.tcommand.includes('amanhã') && action.tcommand.includes('depois')) dia = 2
 
-    const response = await axios.get(`http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/4388/days/15?token=${process.env.CLIMATEMPO_TOKEN}`)
+    await axios.get(`http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/4388/days/15?token=${process.env.CLIMATEMPO_TOKEN}`)
+    .then(response => {
+        const tmax = response.data.data[dia].temperature.max
+        const tmin = response.data.data[dia].temperature.min
+        const pchuva = response.data.data[dia].rain.probability
+        const txt = response.data.data[dia].text_icon.text.pt
     
-    const tmax = response.data.data[dia].temperature.max
-    const tmin = response.data.data[dia].temperature.min
-    const pchuva = response.data.data[dia].rain.probability
-    const txt = response.data.data[dia].text_icon.text.pt
+        const clima = {
+            tmax,
+            tmin,
+            pchuva,
+            txt
+        }
+    
+        dev.log(clima)
+        return clima
+    })
+    .catch(err => {
 
-    const clima = {
-        tmax,
-        tmin,
-        pchuva,
-        txt
-    }
-
-    dev.log(clima)
-    return clima
+        return null
+    })
     
 
 }
