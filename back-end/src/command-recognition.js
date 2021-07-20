@@ -2,7 +2,7 @@ import recorder from 'node-record-lpcm16'
 import {SpeechClient} from '@google-cloud/speech'
 import {handleCommand} from './command-handler.js'
 
-async function listenCommand(timeout = 7000){
+async function listenCommand(timeout = 9000){
 
   return new Promise(resolve => {
     let timer;

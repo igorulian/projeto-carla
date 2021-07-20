@@ -1,68 +1,66 @@
-const fs = require('fs')
-const dev = require('../services/dev')
-const textToSpeech = require('@google-cloud/text-to-speech');
-const util = require('util');
-const spawn = require("child_process").spawn;
+import fs from 'fs'
+import util from 'util'
+import { spawn } from 'child_process'
+import play from 'audio-play'
+import decoded from 'audio-decode'
+import load from 'audio-loader'
+import dotenv from 'dotenv'
+dotenv.config()
 
-const client = new textToSpeech.TextToSpeechClient();
+import TextToSpeechV1 from 'ibm-watson/text-to-speech/v1.js'
+import {IamAuthenticator} from 'ibm-watson/auth/index.js'
 
-require('dotenv').config()
 
-module.exports = {
-    async say(text) {
-        playAudioPython(text)
-        // gerarAudioIBM(text)
-        // gerarAudioGoogle(text)
-        dev.log(text)
-        
-    }
+const IBMApiKey = process.env.IBM_API_KEY
+const IBMServiceURL = process.env.IBM_SERVICE_URL
+
+async function say(text) {
+    console.log(text)
+
+    const treatedText = treatText(text)
+    
+    await gerarAudioIBM(treatedText)
+    console.log(`LINDA: ${treatedText}`)
+    
 }
 
 
-async function gerarAudioGoogle(text) {
-  // The text to synthesize
-  dev.log('Gerando audio com google Cloud...')
-
-  // Construct the request
-  const request = {
-    input: {text: text},
-    // Select the language and SSML voice gender (optional)
-    voice: {languageCode: 'pt-BR', ssmlGender: 'NEUTRAL'},
-    // select the type of audio encoding
-    audioConfig: {audioEncoding: 'MP3'},
-  };
-
-  // Performs the text-to-speech request
-  const [response] = await client.synthesizeSpeech(request);
-  // Write the binary audio content to a local file
-  const writeFile = util.promisify(fs.writeFile);
-  // console.log(response.audioContent)
-  // console.log(__dirname)
-  await writeFile('./src/audio/audioGOOGLE.mp3', response.audioContent, 'binary');
-
-  console.log('Audio GOOGLE Gerado!');
+function treatText(text){
+  let txt = text
+  txt = txt.replace(':30', 'e meia')
+  txt = txt.replace(',', '.') 
+  txt = txt.split(' ')
+  return txt
 }
+
+// async function playAudio(buffer){
+//   console.log('tocando audio...')
+
+//   load('audioIBM.mp3').then(function (buffer) {
+//     console.log(buffer) // => <AudioBuffer>
+//     let playback = play(buffer);
+//     playback.play();
+//   })
+// }
 
 
 async function gerarAudioIBM(text){
-    dev.log('Gerando audio com IBM Cloud...')
-    const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
-    const { IamAuthenticator } = require('ibm-watson/auth');
+    console.log('Gerando audio com IBM Cloud...')
 
     // https://www.youtube.com/watch?v=rSjLe8k5DX0  https://cloud.ibm.com/apidocs/text-to-speech?code=node#data-collection
 
     const textToSpeech = new TextToSpeechV1({
       authenticator: new IamAuthenticator({
-      apikey: "3383ucHfHBmBe1nhrOfSpIVOxUHRWBz-jfChAxdbW3sO",
+        apikey: IBMApiKey,
       }),
-      serviceUrl: "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/12575fac-d9f8-46c8-a251-f939cbfa69fa",
+      serviceUrl: IBMServiceURL,
       disableSslVerification: true, 
     });
 
     const synthesizeParams = {
-      text: '... ' + text + '',
+      text: `${text}`,
       accept: 'audio/mp3',
-      voice: 'pt-BR_IsabelaVoice'
+      voice: 'pt-BR_IsabelaV3Voice'
     };
     
     await textToSpeech.synthesize(synthesizeParams)
@@ -82,23 +80,17 @@ async function gerarAudioIBM(text){
 }
 
 
-async function playAudio(){
-  dev.log('Playando audio...')
-  // const pythonProcess = spawn('python',["./play-audio.py"]);
-  console.log(__dirname + ' -> ' + '/play-audio.py')
-  spawn("C:/Users/IgorU/AppData/Local/Programs/Python/Python39/python.exe",[`.${__dirname}/play-audio.py`]);
-}
-
-
 function playAudioPython(text) {
-  const path = `${__dirname}\\speak.py`
+  const path = `./speak.py`
 
   let txt = text
   txt = txt.replace(':30', 'e meia')
   txt = txt.replace(',', '.') 
   txt = txt.split(' ')
 
-  const pythonProcess = spawn("C:/Users/IgorU/AppData/Local/Programs/Python/Python39/python.exe",[path, txt]);
+  spawn("python",[path, txt]);
   // console.log(pythonProcess)
 
 }
+
+export {say}

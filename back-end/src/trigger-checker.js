@@ -3,7 +3,6 @@ import {listenCommand} from './command-recognition.js'
 import {SpeechClient} from '@google-cloud/speech'
 
 let isTrigged = false
-const trigger = 'linda'
 
 
   function triggerChecker(){
@@ -24,10 +23,9 @@ const trigger = 'linda'
         
       const recognizeStream = client.streamingRecognize(request)
 
-      recognizeStream.on('error', () => {
-        console.error
-        console.log("TENTANDO DNV....")
-        return triggerChecker()
+      recognizeStream.on('error', (err) => {
+        console.log(err)
+        // return triggerChecker()
       })
 
       recognizeStream.on('data', async data => {

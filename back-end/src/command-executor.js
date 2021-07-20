@@ -1,9 +1,4 @@
-//const pesquisar = require('./actions/search')
-//const calculo = require('./actions/calculate')
-//const criar = require('./actions/create')
-//const tocar = require('./actions/tocar')
-//const iniciar = require('./actions/iniciar')
-
+import {search} from './actions/search.js'
 
 async function executeCommand(command) {
     const action = command.action
@@ -11,7 +6,7 @@ async function executeCommand(command) {
     switch (action){
         case 'pesquisar':
             console.log(`executando ação: ${action}`)
-            //pesquisar.pesquisar(command)
+            await search(command)
             break
         case 'calcular':
             console.log(`executando ação: ${action}`)
