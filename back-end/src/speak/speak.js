@@ -19,7 +19,7 @@ async function say(text) {
 
     const treatedText = treatText(text)
     
-    await gerarAudioIBM(treatedText)
+    // await gerarAudioIBM(treatedText)
     console.log(`LINDA: ${treatedText}`)
     
 }
