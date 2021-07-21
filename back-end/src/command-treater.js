@@ -1,6 +1,6 @@
-const pesquisar = ['pesquisar','pesquisa', 'pesquise', 'pesquisou','procure', 'procura', 'qual', 'quem', 'o que', 'quando']
+const pesquisar = ['pesquisar','pesquisa', 'pesquise', 'pesquisou','procure', 'procura', 'qual', 'quem', 'o que', 'quando', 'quanto']
 const ligar = ['ligar','ligue','acender','acende', 'acenda', 'Cíntia']
-const calcular = ['calcular', 'calcula', 'calcule', 'quanto']
+const calcular = ['calcular', 'calcula', 'calcule']
 const criar = ['criar', 'cria', 'crie', 'adicione', 'adicionar','adiciona','quero', 'queria']
 const remover = ['remover', 'remove', 'remova', 'deletar', 'delete', 'deleta']
 const tocar = ['tocar', 'toca', 'toque', 'coloca']
@@ -26,8 +26,6 @@ const getTreatCommand = (command,verb) => {
     let tcommand = command.replace(verb.verbSaid, '')
     tcommand = tcommand.toLowerCase()
     tcommand = tcommand.trim()
-    // adicionar qualquer palavra para ser excluida
-    // tcommand = tcommand.replace('x', ')
     return tcommand
 }
 

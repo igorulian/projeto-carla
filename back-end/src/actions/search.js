@@ -3,9 +3,14 @@ import { WeatherForecast } from '../services/weather.js'
 import { WikipediaSearch } from '../services/wikipedia-search.js'
 import { DolarQuote } from '../services/dollar-quote.js'
 
+
 export async function search(action) {
 
-    if(action.treatCommand.includes('previsão')){
+    const hasWord = (word) => {
+        return action.treatCommand.includes(word)
+    }
+
+    if(hasWord('previsão')){
         const tempResponse = await WeatherForecast(action)
 
         if(!tempResponse){
@@ -13,12 +18,11 @@ export async function search(action) {
             return
         }
         
-        const txt = `A previsão é de ${tempResponse.text}, temperatura máxima de ${tempResponse.max}, e mínima de ${tempResponse.min}, com ${tempResponse.probability} % de chance de chuva`
-        await say(txt)
+        await say(`A previsão é de ${tempResponse.text}, temperatura máxima de ${tempResponse.max}, e mínima de ${tempResponse.min}, com ${tempResponse.probability} % de chance de chuva`)
         return
     }
 
-    if(action.treatCommand.includes('preço') && action.treatCommand.includes('dólar')){
+    if(hasWord('preço') && hasWord('dólar')){
         const dolarResponse = await DolarQuote(action)
 
         if(!dolarResponse){
@@ -26,22 +30,21 @@ export async function search(action) {
             return
         }
         
-        const txt = `O Dólar atualmente está em ${dolarResponse.real} reais e ${dolarResponse.centavo} centavos`
-        await say(txt)
+        await say(`O Dólar atualmente está em ${dolarResponse.real} reais e ${dolarResponse.centavo} centavos`)
         return
     }
 
 
-    if(action.treatCommand.includes('sobre') || action.treatCommand.includes('wikipedia')){
-        await say('Pesquisando...')
-        const pesquisaRsponse = await WikipediaSearch(action)
+    if(hasWord('sobre') || hasWord('wikipedia')){
+        await say('Pesquisando')
+        const pesquisaResponse = await WikipediaSearch(action)
         
-        if(!pesquisaRsponse){
+        if(!pesquisaResponse){
             await say('Não foi possivel encontrar nada sobre o assunto.')
             return
         }
         
-        await say(pesquisaRsponse)
+        await say(pesquisaResponse)
         return
     }
     

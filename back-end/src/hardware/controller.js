@@ -1,12 +1,13 @@
 
+let loading = false
+let listening = false
 
-
-function setLoading(){
-
+function setLoading(bool=true){
+    loading = bool
 }
 
-function setListening(){
-
+function setListening(bool=true){
+    listening = bool
 }
 
 export {setLoading, setListening}

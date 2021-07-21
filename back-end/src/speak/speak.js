@@ -17,13 +17,19 @@ function treatText(text){
   let txt = text
   txt = txt.replace(':30', 'e meia')
   txt = txt.replace(',', '.') 
-  txt = txt.replace('máxima', 'másima')
+  txt = txt.replace('máxima', 'máçima')
   return txt
 }
 
-async function playAudio(){
-  console.log('Tocando audio...')
-  spawn("python",['./src/speak/play.py', '']);
+
+async function playAudio() {
+  const child = spawn("python",['./src/speak/play.py', ''])
+
+  await new Promise(resolve => {
+      child.on('close', resolve);
+  })
+
+  return
 }
 
 
