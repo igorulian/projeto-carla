@@ -9,25 +9,8 @@ import { iniciar, pesquisar } from "./verbs.js"
 
 
 export async function ExecuteCommand(command){
-    const {treatCommand} = command 
 
-    const hasWords = (words) => {
-        let has = false
-        words.forEach(word => {
-            if(Array.isArray(word)){
-                let hasSomeSub = false
-                word.forEach(subword => {
-                    if(treatCommand.includes(subword))
-                        hasSomeSub = true
-                })
-                has = hasSomeSub
-            } else {
-            if(treatCommand.includes(word))
-                has = true
-            }
-        })
-        return has
-    }
+    const hasWords = (words) => hasWordsFunction(words,command)
 
     if(hasWords(['previsão', 'tempo']))
         return await WeatherForecast(command)
@@ -50,4 +33,28 @@ export async function ExecuteCommand(command){
 
     if(hasWords([pesquisar]))
         return await WikipediaSearch(command)
+}
+
+
+
+
+
+
+const hasWordsFunction = (words,command) => {
+    const {treatCommand} = command 
+    let has = false
+    words.forEach(word => {
+        if(Array.isArray(word)){
+            let hasSomeSub = false
+            word.forEach(subword => {
+                if(treatCommand.includes(subword))
+                    hasSomeSub = true
+            })
+            has = hasSomeSub
+        } else {
+        if(treatCommand.includes(word))
+            has = true
+        }
+    })
+    return has
 }
