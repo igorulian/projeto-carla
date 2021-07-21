@@ -1,3 +1,4 @@
+import { HowAreYouDoing, WhoAreYou } from "../services/chat.js"
 import { DolarQuote } from "../services/dollar-quote.js"
 import { Timer } from "../services/timer.js"
 import { WeatherForecast } from "../services/weather.js"
@@ -10,7 +11,7 @@ import { iniciar, pesquisar } from "./verbs.js"
 
 export async function ExecuteCommand(command){
 
-    const hasWords = (words) => hasWordsFunction(words,command)
+    const hasWords = words => hasWordsFunction(words,command)
 
     if(hasWords(['previsão', 'tempo']))
         return await WeatherForecast(command)
@@ -30,6 +31,14 @@ export async function ExecuteCommand(command){
 
     if(hasWords([iniciar,'cronômetro']))
         return await Timer(command)
+
+    //chat
+
+    if(hasWords(['quem', 'é', 'você']))
+        return await WhoAreYou(command)
+
+    if(hasWords(['como', 'você', 'está']))
+        return await HowAreYouDoing(command)
 
     if(hasWords([pesquisar]))
         return await WikipediaSearch(command)
