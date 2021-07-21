@@ -43,9 +43,6 @@ const treatCommand = (command) => {
 
     console.log(treatedCommand)
 
-    if(!treatedCommand.action || !treatedCommand.verbSaid || !treatedCommand.treatCommand || !treatedCommand.fullCommand) 
-        return null
-
     return treatedCommand
 }
 

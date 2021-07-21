@@ -1,6 +1,22 @@
 import axios from 'axios'
+import { say } from '../speak/speak.js'
+
+
 
 async function WeatherForecast(action){
+    const data = await getData(action)
+
+    if(!data)
+        return await say('Não foi possível verificar a previsão do tempo')
+    
+    const success = `A previsão é de ${data.text}, temperatura máxima de ${data.max}, e mínima de ${data.min}, com ${data.probability} % de chance de chuva`
+    
+    return await say(success)  
+}
+
+
+
+async function getData(action){
     let dia = 0
     
     if(action.treatCommand.includes('hoje')) dia = 0
