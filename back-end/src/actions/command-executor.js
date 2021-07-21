@@ -37,7 +37,7 @@ export async function ExecuteCommand(command){
     if(hasWords(['quem', 'é', 'você']))
         return await WhoAreYou(command)
 
-    if(hasWords(['como', 'você', 'está']))
+    if(hasWords(['como', 'você', ['está', 'tá']]))
         return await HowAreYouDoing(command)
 
     if(hasWords([pesquisar]))
@@ -51,8 +51,9 @@ export async function ExecuteCommand(command){
 
 const hasWordsFunction = (words,command) => {
     const {treatCommand} = command 
-    let has = false
+    let has = true
     words.forEach(word => {
+
         if(Array.isArray(word)){
             let hasSomeSub = false
             word.forEach(subword => {
@@ -60,9 +61,10 @@ const hasWordsFunction = (words,command) => {
                     hasSomeSub = true
             })
             has = hasSomeSub
+
         } else {
-        if(treatCommand.includes(word))
-            has = true
+        if(!treatCommand.includes(word))
+            has = false
         }
     })
     return has

@@ -1,11 +1,13 @@
 import axios from 'axios'
 import { say } from '../speak/speak.js'
-
+import fs from 'fs'
+import util from 'util'
 
 
 async function WeatherForecast(action){
-    const data = await getData(action)
+    const data = await getDataFromCache(action)
 
+    console.log(data)
     if(!data)
         return await say('Não foi possível verificar a previsão do tempo')
     
@@ -14,35 +16,83 @@ async function WeatherForecast(action){
     return await say(success)  
 }
 
+export async function StartWheaterVerification(firstupdate=true){
+    if(firstupdate)
+        await updateWheater()
+
+    setTimeout(async () => {
+        await updateWheater()
+    },10 * 6000) // 10min
+}
+
+async function updateWheater(){
+    console.log('🌦️  Atualizando previsão do tempo...')
+
+    const newData = await getDataFromAPI()
+
+    if(!newData) return console.log('🌦️  Ocorreu um erro ao atualizar a previsão do tempo #01❌')
+
+    await saveInCache( newData )
+
+    console.log('🌦️  Previsão do tempo atualizada ✅')
+}
+
+async function saveInCache(data){
+    const writeFile = util.promisify(fs.writeFile);
+    await writeFile('./src/data/weather-cache.json', JSON.stringify(data), err => {
+        if(err)
+            console.log('🌦️ Ocorreu um erro ao atualizar a previsão do tempo #02❌')
+    })
+}
 
 
-async function getData(action){
-    let dia = 0
+async function getDataFromCache(action){
+    const {fullCommand} = action
+    let day = 0
+
+    if(fullCommand.includes('amanhã')) 
+        day = 1
+
+    if(fullCommand.includes('amanhã') && fullCommand.includes('depois')) 
+        day = 2
+
+
+    const readFile = util.promisify(fs.readFile);
+    const data = await readFile('./src/data/weather-cache.json', (err,data) => {
+        return data
+    })
     
-    if(action.treatCommand.includes('hoje')) dia = 0
-    if(action.treatCommand.includes('amanhã')) dia = 1
-    if(action.treatCommand.includes('amanhã') && action.treatCommand.includes('depois')) dia = 2
+    return JSON.parse(data)[day]
+}
+
+async function getDataFromAPI(){
+    let dia = 0
 
     const url = `http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/4388/days/15?token=${process.env.CLIMATEMPO_TOKEN}`
-   
-    const clima = await axios.get(url)
+    const data = []
+
+    await axios.get(url)
     .then(response => {
-        const {max,min} = response.data.data[dia].temperature
-        const {probability} = response.data.data[dia].rain
-        const text = response.data.data[dia].text_icon.text.pt
-    
-        const data = {
-            max,
-            min,
-            probability,
-            text
+        for(let x = 0; x < 3; x++){
+
+            const {max,min} = response.data.data[x].temperature
+            const {probability} = response.data.data[x].rain
+            const text = response.data.data[x].text_icon.text.pt
+        
+            const dayData = {
+                max,
+                min,
+                probability,
+                text
+            }
+
+            data.push(dayData)
         }
-    
-        return data
+
     })
     .catch(() => { return null })
 
-    return clima
+    return data
 }
 
 export {WeatherForecast}
