@@ -1,4 +1,5 @@
 import { DolarQuote } from "../services/dollar-quote.js"
+import { Timer } from "../services/timer.js"
 import { WeatherForecast } from "../services/weather.js"
 import { WhatDay } from "../services/what-day.js"
 import { WhatTime } from "../services/what-time.js"
@@ -29,4 +30,8 @@ export async function ExecuteCommand(command){
     
     if(hasWords(['dia', 'hoje']))
         return await WhatDay(command)
+
+
+    if(hasWords(['cronômetro']))
+        return await Timer(command)
 }
