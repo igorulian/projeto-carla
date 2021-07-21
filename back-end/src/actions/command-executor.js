@@ -3,15 +3,28 @@ import { Timer } from "../services/timer.js"
 import { WeatherForecast } from "../services/weather.js"
 import { WhatDay } from "../services/what-day.js"
 import { WhatTime } from "../services/what-time.js"
+import { WikipediaSearch } from '../services/wikipedia-search.js'
+import { iniciar, pesquisar } from "./verbs.js"
+
+
 
 export async function ExecuteCommand(command){
     const {treatCommand} = command 
 
     const hasWords = (words) => {
-        let has = true
+        let has = false
         words.forEach(word => {
-            if(!treatCommand.includes(word))
-                has = false
+            if(Array.isArray(word)){
+                let hasSomeSub = false
+                word.forEach(subword => {
+                    if(treatCommand.includes(subword))
+                        hasSomeSub = true
+                })
+                has = hasSomeSub
+            } else {
+            if(treatCommand.includes(word))
+                has = true
+            }
         })
         return has
     }
@@ -20,7 +33,7 @@ export async function ExecuteCommand(command){
         return await WeatherForecast(command)
 
 
-    if(hasWords(['preço', 'dólar']))
+    if(hasWords([['preço', 'cotação'], 'dólar']))
         return await DolarQuote(command)
 
 
@@ -32,6 +45,9 @@ export async function ExecuteCommand(command){
         return await WhatDay(command)
 
 
-    if(hasWords(['cronômetro']))
+    if(hasWords([iniciar,'cronômetro']))
         return await Timer(command)
+
+    if(hasWords([pesquisar]))
+        return await WikipediaSearch(command)
 }
