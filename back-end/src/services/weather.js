@@ -7,11 +7,10 @@ import util from 'util'
 async function WeatherForecast(action){
     const data = await getDataFromCache(action)
 
-    console.log(data)
     if(!data)
         return await say('Não foi possível verificar a previsão do tempo')
     
-    const success = `A previsão é de ${data.text}, temperatura máxima de ${data.max}, e mínima de ${data.min}, com ${data.probability} % de chance de chuva`
+    const success = `A previsão é de ${data.text}, com temperatura máxima de ${data.max}, e mínima de ${data.min}, com ${data.probability} % de chance de chuva`
     
     return await say(success)  
 }
