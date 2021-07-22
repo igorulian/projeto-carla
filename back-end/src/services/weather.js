@@ -15,25 +15,32 @@ async function WeatherForecast(action){
     return await say(success)  
 }
 
-export async function StartWheaterVerification(firstupdate=true){
+export async function StartWheaterVerification(firstupdate=true, updateAfterTime=true){
     if(firstupdate)
         await updateWheater()
 
+    if(updateAfterTime)
+        startUpdateAfterTime()
+}
+
+function startUpdateAfterTime(){
     setTimeout(async () => {
         await updateWheater()
-    },10 * 6000) // 10min
+        startUpdateAfterTime()
+    },60 * 10 * 1000) // 10min
 }
 
 async function updateWheater(){
-    console.log('🌦️  Atualizando previsão do tempo...')
+    console.log('\n🌦️  Atualizando previsão do tempo...')
 
     const newData = await getDataFromAPI()
 
-    if(!newData) return console.log('🌦️  Ocorreu um erro ao atualizar a previsão do tempo #01❌')
+    if(!newData) 
+        return console.log('🌦️  Ocorreu um erro ao atualizar a previsão do tempo #01❌')
 
     await saveInCache( newData )
 
-    console.log('🌦️  Previsão do tempo atualizada ✅')
+    console.log('🌦️  Previsão do tempo atualizada ✅\n')
 }
 
 async function saveInCache(data){
