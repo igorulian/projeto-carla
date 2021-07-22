@@ -1,5 +1,7 @@
 {
     "weather":{
-        "verificationDelay": 1       
+        "doFirstUpdate": false,
+        "updateAfterTime": true,
+        "verificationDelay": 10       
     }
 }

@@ -15,11 +15,11 @@ async function WeatherForecast(action){
     return await say(success)  
 }
 
-export async function StartWheaterVerification(firstupdate=true, updateAfterTime=true){
-    if(firstupdate)
+export async function SetupWheaterVerification(){
+    if(config.weather.doFirstUpdate)
         await updateWheater()
 
-    if(updateAfterTime)
+    if(config.weather.updateAfterTime)
         startUpdateAfterTime()
 }
 
