@@ -3,5 +3,9 @@
         "doFirstUpdate": true,
         "updateAfterTime": true,
         "verificationDelay": 10       
+    },
+    "wakeup": {
+        "enable": true,
+        "time": "16:03"
     }
 }

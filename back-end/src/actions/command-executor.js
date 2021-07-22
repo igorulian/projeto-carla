@@ -46,7 +46,6 @@ export async function ExecuteCommand(command){
     if(hasWords([['será', 'devo'], 'eu', ['saio', 'sair']]))
         return await ShouldILeave(command)
 
-
     if(hasWords([['voltei', 'cheguei']]))
         return await IamBack(command)
 

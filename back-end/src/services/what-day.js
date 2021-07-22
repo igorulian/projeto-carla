@@ -2,12 +2,12 @@ import { say } from "../speak/speak.js"
 
 
 export async function WhatDay(command) {
-    const data = getData()
+    const data = getDay()
 
     await say(`Hoje é ${data.daytxt}, dia ${data.day} de ${data.month}`)
 }
 
-function getData(){
+export function getDay(){
     const days = ['segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado', 'domingo']
     const months = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
 
