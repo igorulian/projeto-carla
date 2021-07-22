@@ -73,7 +73,6 @@ async function getDataFromCache(action){
 
 async function getDataFromAPI(){
     let dia = 0
-
     const url = `http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/4388/days/15?token=${process.env.CLIMATEMPO_TOKEN}`
     const data = []
 
@@ -81,17 +80,22 @@ async function getDataFromAPI(){
     .then(response => {
         for(let x = 0; x < 3; x++){
 
-            const {max,min} = response.data.data[x].temperature
+            const {max,min,night} = response.data.data[x].temperature
             const {probability} = response.data.data[x].rain
             const text = response.data.data[x].text_icon.text.pt
+            const {min:nightMin, max:nightMax} = night
         
             const dayData = {
                 max,
                 min,
                 probability,
-                text
+                text,
+                night: {
+                    min: nightMin,
+                    max: nightMax
+                }
             }
-
+            
             data.push(dayData)
         }
 
@@ -101,4 +105,14 @@ async function getDataFromAPI(){
     return data
 }
 
-export {WeatherForecast}
+
+async function GetWeather(day=0){
+    const readFile = util.promisify(fs.readFile);
+    const data = await readFile('./src/data/weather-cache.json', (err,data) => {
+        return data
+    })
+    
+    return JSON.parse(data)[day]
+}
+
+export {WeatherForecast, GetWeather}

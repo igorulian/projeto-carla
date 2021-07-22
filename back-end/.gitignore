@@ -2,3 +2,5 @@ google-cred.json
 /node_modules
 .env
 google-key.json
+*.mp3
+*.wav

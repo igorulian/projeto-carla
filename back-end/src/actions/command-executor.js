@@ -1,4 +1,4 @@
-import { HowAreYouDoing, WhoAreYou } from "../services/chat.js"
+import { HowAreYouDoing, IamBack, IllLeave, ShouldILeave, WhoAreYou } from "../services/chat.js"
 import { DolarQuote } from "../services/dollar-quote.js"
 import { Timer } from "../services/timer.js"
 import { WeatherForecast } from "../services/weather.js"
@@ -39,6 +39,16 @@ export async function ExecuteCommand(command){
 
     if(hasWords(['como', 'você', ['está', 'tá']]))
         return await HowAreYouDoing(command)
+        
+    if(hasWords(['vour', ['sair', 'festa']]))
+        return await IllLeave(command)
+        
+    if(hasWords([['será', 'devo'], 'eu', ['saio', 'sair']]))
+        return await ShouldILeave(command)
+
+
+    if(hasWords([['voltei', 'cheguei']]))
+        return await IamBack(command)
 
     if(hasWords([pesquisar]))
         return await WikipediaSearch(command)
@@ -51,21 +61,24 @@ export async function ExecuteCommand(command){
 
 const hasWordsFunction = (words,command) => {
     const {treatCommand} = command 
-    let has = true
+    let hasAll = true
     words.forEach(word => {
 
         if(Array.isArray(word)){
             let hasSomeSub = false
+
             word.forEach(subword => {
                 if(treatCommand.includes(subword))
                     hasSomeSub = true
             })
-            has = hasSomeSub
+
+            hasAll = hasSomeSub
 
         } else {
+            
         if(!treatCommand.includes(word))
-            has = false
+            hasAll = false
         }
     })
-    return has
+    return hasAll
 }
