@@ -2,7 +2,7 @@ import axios from 'axios'
 import { say } from '../speak/speak.js'
 import fs from 'fs'
 import util from 'util'
-
+import { config } from '../config/config.js'
 
 async function WeatherForecast(action){
     const data = await getDataFromCache(action)
@@ -27,7 +27,7 @@ function startUpdateAfterTime(){
     setTimeout(async () => {
         await updateWheater()
         startUpdateAfterTime()
-    },60 * 10 * 1000) // 10min
+    },60 * config.weather.verificationDelay * 1000)
 }
 
 async function updateWheater(){
