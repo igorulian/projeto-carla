@@ -1,3 +1,4 @@
+import { listenConfirmation } from "../command-confirmation.js"
 import { config } from "../config/config.js"
 import { say } from "../speak/speak.js"
 import { GetWeather } from "./weather.js"
@@ -38,8 +39,13 @@ async function WAKEUP(hour,minute){
 
     const mintext = `${minute ? `${minute === 30 ? 'meia' : ''} ${minute !== 30 ? `${minute}` : ''} `: ''}`
 
-    await say(`Bom dia senhor, hoje é ${daytxt}, são ${hour} e ${mintext}, o dia está ${text}, com temperatura máxima de ${max} e mínima de ${min}`)
+    await say(`Bom dia senhor, hoje é ${daytxt}, são ${hour} e ${mintext}, o dia está ${text}, com temperatura máxima de ${max} e mínima de ${min}.
+                O Senhor possui ${2} compromissos para hoje, deseja que eu liste todos?`)
 
-    await say(`O Senhor possui ${2} compromissos para hoje, deseja que eu liste todos?`)
+    if(await listenConfirmation()){
+        await say(`Ok! Hoje o senhor possui:
+            Teste às 15:30  
+            Teste2 às 20:30`)
+    }            
 }
 

@@ -5,7 +5,10 @@ import {IamAuthenticator} from 'ibm-watson/auth/index.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
+const format = 'mp3'
+
 async function generateIBMAudio(text){
+    console.log(new Date())
     console.log('Gerando audio com IBM Cloud...')
 
     const textToSpeech = new TextToSpeechV1({
@@ -18,22 +21,23 @@ async function generateIBMAudio(text){
 
     const synthesizeParams = {
       text: `${text}`,
-      accept: 'audio/wav',
+      accept: `audio/${format}`,
       voice: 'pt-BR_IsabelaV3Voice'
     };
     
     await textToSpeech.synthesize(synthesizeParams)
       .then(response => {
-        return textToSpeech.repairWavHeaderStream(response.result);
-      })
-      .then(async buffer => {
-        const writeFile = util.promisify(fs.writeFile);
-
-        await writeFile('./src/audio/audio.wav', buffer);
+        response.result.pipe(fs.createWriteStream(`./src/audio/audio.${format}`));
       })
       .catch(err => {
         console.log('error:', err);
       });
+    
+    console.log('Terminou')
+    console.log(new Date())
 }
+
+
+generateIBMAudio('essa é uma frase para testar')
 
 export {generateIBMAudio}
