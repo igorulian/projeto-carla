@@ -26,7 +26,6 @@ async function generateIBMAudio(text){
     
     await textToSpeech.synthesize(synthesizeParams)
       .then(async response => {
-        const createWriteStream = util.promisify(fs.createWriteStream);
         const buffer = response.result
         await buffer.pipe(fs.createWriteStream(`./src/audio/audio.${format}`));
 

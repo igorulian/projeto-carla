@@ -10,11 +10,8 @@ export async function listenConfirmation(timeout = timeoutSec * 1000){
 
     async function responseHandler(awnser) {
       pauseStream()
-      resolve()
-      console.log('passo aqui')
       clearTimeout(timer)
-      console.log('passo aqui 2')
-      return awnser
+      resolve(awnser)
     }
 
     // Command Handler
@@ -44,11 +41,12 @@ export async function listenConfirmation(timeout = timeoutSec * 1000){
         if(isPaused) responseHandler()
 
         const text = data.results[0].alternatives[0].transcript
+        console.log(text)
 
-        if(text.toLowerCase().inclues('sim') || text.toLowerCase().inclues('por favor') || text.toLowerCase().inclues('porfavor'))
+        if(text.toLowerCase().includes('sim') || text.toLowerCase().includes('por favor') || text.toLowerCase().includes('porfavor'))
             return responseHandler(true)
 
-        if(text.toLowerCase().inclues('não'))
+        if(text.toLowerCase().includes('não'))
             return responseHandler(true)
 
         console.log(`Command: ${text}`)
@@ -59,7 +57,7 @@ export async function listenConfirmation(timeout = timeoutSec * 1000){
       );
 
       function pauseStream(){
-        recognizeStream.end()// our pause
+        recognizeStream.pause()// our pause
       }
         
       recorder
@@ -74,7 +72,7 @@ export async function listenConfirmation(timeout = timeoutSec * 1000){
         .on('error', console.error)
         .pipe(recognizeStream)
         
-      console.log('✔️ Ouvindo confirmação')
+      console.log('❓ Ouvindo confirmação...')
 
     // Command Handler
 
