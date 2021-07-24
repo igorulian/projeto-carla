@@ -29,9 +29,8 @@ function CheckWakeUp(WakeupHour,WakeupMinute){
     },60000)
 }
 
-
-
 async function WAKEUP(hour,minute){
+    console.log('wkp')
     const { daytxt } = getDay()
     let { text,max,min } = await GetWeather()
     text = text.replace('Sol', 'ensolarado')

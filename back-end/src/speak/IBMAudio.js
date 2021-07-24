@@ -8,7 +8,6 @@ dotenv.config()
 const format = 'mp3'
 
 async function generateIBMAudio(text){
-    console.log(new Date())
     console.log('Gerando audio com IBM Cloud...')
 
     const textToSpeech = new TextToSpeechV1({
@@ -26,18 +25,19 @@ async function generateIBMAudio(text){
     };
     
     await textToSpeech.synthesize(synthesizeParams)
-      .then(response => {
-        response.result.pipe(fs.createWriteStream(`./src/audio/audio.${format}`));
+      .then(async response => {
+        const createWriteStream = util.promisify(fs.createWriteStream);
+        const buffer = response.result
+        await buffer.pipe(fs.createWriteStream(`./src/audio/audio.${format}`));
+
+        await new Promise(function(resolve, reject) {
+          buffer.on('end', () => {resolve()});
+          buffer.on('error', reject); // or something like that. might need to close `hash`
+        })
       })
       .catch(err => {
         console.log('error:', err);
       });
-    
-    console.log('Terminou')
-    console.log(new Date())
 }
-
-
-generateIBMAudio('essa é uma frase para testar')
 
 export {generateIBMAudio}

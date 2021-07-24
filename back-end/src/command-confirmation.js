@@ -45,7 +45,7 @@ export async function listenConfirmation(timeout = timeoutSec * 1000){
 
         const text = data.results[0].alternatives[0].transcript
 
-        if(text.toLowerCase().inclues('sim'))
+        if(text.toLowerCase().inclues('sim') || text.toLowerCase().inclues('por favor') || text.toLowerCase().inclues('porfavor'))
             return responseHandler(true)
 
         if(text.toLowerCase().inclues('não'))
@@ -74,7 +74,7 @@ export async function listenConfirmation(timeout = timeoutSec * 1000){
         .on('error', console.error)
         .pipe(recognizeStream)
         
-      console.log('✔️ Ouvindo comando')
+      console.log('✔️ Ouvindo confirmação')
 
     // Command Handler
 
