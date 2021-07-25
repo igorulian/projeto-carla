@@ -40,10 +40,10 @@ export async function ExecuteCommand(command){
     if(hasWords(['como', 'você', ['está', 'tá']]))
         return await HowAreYouDoing(command)
         
-    if(hasWords(['vour', ['sair', 'festa']]))
+    if(hasWords(['vou', ['sair', 'festa']]))
         return await IllLeave(command)
         
-    if(hasWords([['será', 'devo'], 'eu', ['saio', 'sair']]))
+    if(hasWords([['será', 'devo'], 'eu', ['saio', 'sair', 'festa']]))
         return await ShouldILeave(command)
 
     if(hasWords([['voltei', 'cheguei']]))
@@ -71,12 +71,14 @@ const hasWordsFunction = (words,command) => {
                     hasSomeSub = true
             })
 
-            hasAll = hasSomeSub
+            if(!hasSomeSub)
+                hasAll = false
 
         } else {
             
         if(!treatCommand.includes(word))
             hasAll = false
+
         }
     })
     return hasAll

@@ -3,12 +3,16 @@ import util from 'util'
 import TextToSpeechV1 from 'ibm-watson/text-to-speech/v1.js'
 import {IamAuthenticator} from 'ibm-watson/auth/index.js'
 import dotenv from 'dotenv'
+// import Speaker from 'speaker'
 dotenv.config()
 
 const format = 'mp3'
+// const speaker = new Speaker()
 
 async function generateIBMAudio(text){
     console.log('Gerando audio com IBM Cloud...')
+    const startingDate = new Date()
+    const startingTime = startingDate.getHours()*3600 + startingDate.getMinutes()*60 + startingDate.getSeconds()
 
     const textToSpeech = new TextToSpeechV1({
       authenticator: new IamAuthenticator({
@@ -27,6 +31,8 @@ async function generateIBMAudio(text){
     await textToSpeech.synthesize(synthesizeParams)
       .then(async response => {
         const buffer = response.result
+        // buffer.pipe(speaker)
+        // speaker.write(buffer)
         await buffer.pipe(fs.createWriteStream(`./src/audio/audio.${format}`));
 
         await new Promise(function(resolve, reject) {
@@ -37,6 +43,12 @@ async function generateIBMAudio(text){
       .catch(err => {
         console.log('error:', err);
       });
+
+    const finishingDate = new Date()
+    const finishingTime = finishingDate.getHours()*3600 + finishingDate.getMinutes()*60 + finishingDate.getSeconds()
+
+    const totalTime = finishingTime - startingTime
+    console.log(`Audio gerado em: ${totalTime} segundos`)
 }
 
 export {generateIBMAudio}
