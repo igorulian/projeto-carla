@@ -6,7 +6,8 @@ import { WeatherForecast } from "../services/weather.js"
 import { WhatDay } from "../services/what-day.js"
 import { WhatTime } from "../services/what-time.js"
 import { WikipediaSearch } from '../services/wikipedia-search.js'
-import { iniciar, pesquisar } from "./verbs.js"
+import { PlayMusic } from "../services/youtube-player.js"
+import { iniciar, pesquisar, tocar } from "./verbs.js"
 
 
 
@@ -36,6 +37,9 @@ export async function ExecuteCommand(command){
     if(hasWords(['como', ['é', 'fala'], 'inglês']))
         return await TranslateText(command)
 
+    if(hasWords([tocar]))
+        return PlayMusic(command)
+
     //chat
 
     if(hasWords(['quem', 'é', 'você']))
@@ -63,7 +67,7 @@ export async function ExecuteCommand(command){
 
 
 const hasWordsFunction = (words,command) => {
-    const {treatCommand} = command 
+    const {fullCommand} = command 
     let hasAll = true
     words.forEach(word => {
 
@@ -71,7 +75,7 @@ const hasWordsFunction = (words,command) => {
             let hasSomeSub = false
 
             word.forEach(subword => {
-                if(treatCommand.includes(subword))
+                if(fullCommand.includes(subword))
                     hasSomeSub = true
             })
 
@@ -79,8 +83,8 @@ const hasWordsFunction = (words,command) => {
                 hasAll = false
 
         } else {
-            
-        if(!treatCommand.includes(word))
+
+        if(!fullCommand.includes(word))
             hasAll = false
 
         }
