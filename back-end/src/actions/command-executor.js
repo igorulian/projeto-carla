@@ -1,6 +1,7 @@
 import { HowAreYouDoing, IamBack, IllLeave, ShouldILeave, WhoAreYou } from "../services/chat.js"
 import { DolarQuote } from "../services/dollar-quote.js"
 import { Timer } from "../services/timer.js"
+import { TranslateText } from "../services/translate.js"
 import { WeatherForecast } from "../services/weather.js"
 import { WhatDay } from "../services/what-day.js"
 import { WhatTime } from "../services/what-time.js"
@@ -31,6 +32,9 @@ export async function ExecuteCommand(command){
 
     if(hasWords([iniciar,'cronômetro']))
         return await Timer(command)
+    
+    if(hasWords(['como', ['é', 'fala'], 'inglês']))
+        return await TranslateText(command)
 
     //chat
 
