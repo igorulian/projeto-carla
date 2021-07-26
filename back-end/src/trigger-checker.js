@@ -37,7 +37,7 @@ let isTrigged = false
         const hasTrigger = text.toString().toLowerCase().includes('linda')
 
         if(hasTrigger){
-          console.log(`✅ Trigger encontrado`)
+          console.log(`🔥 Trigger encontrado`)
 
           isTrigged = true
           setListening(true)

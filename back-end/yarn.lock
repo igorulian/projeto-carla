@@ -512,7 +512,7 @@ audio-speaker@^1.4.0:
     audio-sink "^1.0.2"
     speaker "^0.5.3"
 
-audio-through@^2.1.9, audio-through@^2.2.3:
+audio-through@2.2.3, audio-through@^2.1.9, audio-through@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/audio-through/-/audio-through-2.2.3.tgz#14fc8c37b613d1c870cfaee04bf4454c28959fbf"
   integrity sha1-FPyMN7YT0chwz67gS/RFTCiVn78=

@@ -5,10 +5,10 @@ async function say(text) {
     const treatedText = treatText(text)
     
     await generateIBMAudio(treatedText)
+    
+    console.log('\x1b[33m%s\x1b[0m',`L.I.N.D.A: ${treatedText}`)
 
     await playAudio()
-
-    console.log(`L.I.N.D.A: ${treatedText}`)
     
 }
 
@@ -42,7 +42,6 @@ function playAudioPython(text) {
   txt = txt.split(' ')
 
   spawn("python",[path, txt]);
-  // console.log(pythonProcess)
 
 }
 

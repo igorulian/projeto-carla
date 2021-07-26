@@ -10,7 +10,8 @@ async function listenCommand(timeout = timeoutSec * 1000){
     let timer;
 
     async function responseHandler(text) {
-      pauseStream()
+      // pauseStream()  
+      destroyStream()
       await handleCommand(text)
       resolve()
       clearTimeout(timer)
@@ -38,12 +39,9 @@ async function listenCommand(timeout = timeoutSec * 1000){
       recognizeStream.on('error', console.error)
 
       recognizeStream.on('data', data => {
-        const isPaused = recognizeStream.isPaused()
-
-        if(isPaused) responseHandler()
 
         const text = data.results[0].alternatives[0].transcript
-        console.log(`Command: ${text}`)
+        console.log(`🎧 Comando: ${text}`)
 
         //check.checkText(text)
         responseHandler(text)
@@ -51,8 +49,8 @@ async function listenCommand(timeout = timeoutSec * 1000){
       }
       );
 
-      function pauseStream(){
-        recognizeStream.pause()
+      function destroyStream(){
+        recognizeStream.destroy()
       }
         
       recorder
@@ -67,7 +65,7 @@ async function listenCommand(timeout = timeoutSec * 1000){
         .on('error', console.error)
         .pipe(recognizeStream)
         
-      console.log('✔️ Ouvindo comando')
+      console.log('\n🎧 Ouvindo comando...')
 
     // Command Handler
 

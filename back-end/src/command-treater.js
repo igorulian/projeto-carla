@@ -41,8 +41,6 @@ const treatCommand = (command) => {
         fullCommand: command
     }
 
-    console.log(treatedCommand)
-
     return treatedCommand
 }
 
