@@ -5,8 +5,6 @@ import time
 engine = p.init()
 
 def falar(texto):
-    engine.setProperty('voice', 'brazil')
-    engine.setProperty('gender', 'female')
     engine.say(texto)
     engine.runAndWait()
     volume = engine.getProperty('volume')   #getting to know current volume level (min=0 and max=1)
