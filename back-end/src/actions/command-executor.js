@@ -67,7 +67,7 @@ export async function ExecuteCommand(command){
 
 
 const hasWordsFunction = (words,command) => {
-    const {fullCommand} = command 
+    const {treatCommand} = command 
     let hasAll = true
     words.forEach(word => {
 
@@ -75,7 +75,7 @@ const hasWordsFunction = (words,command) => {
             let hasSomeSub = false
 
             word.forEach(subword => {
-                if(fullCommand.includes(subword))
+                if(treatCommand.includes(subword))
                     hasSomeSub = true
             })
 
@@ -84,7 +84,7 @@ const hasWordsFunction = (words,command) => {
 
         } else {
 
-        if(!fullCommand.includes(word))
+        if(!treatCommand.includes(word))
             hasAll = false
 
         }

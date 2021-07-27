@@ -23,7 +23,7 @@ const getVerb = (command) => {
 }
 
 const getTreatCommand = (command,verb) => {
-    let tcommand = command.replace(verb.verbSaid, '')
+    let tcommand = command
     tcommand = tcommand.toLowerCase()
     tcommand = tcommand.trim()
     return tcommand
