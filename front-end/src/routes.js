@@ -6,11 +6,6 @@ import Test from './pages/Test/Teste.js'
 import VideoDisplay from './pages/VideoDisplay/VideoDisplay'
 import FacialRecognition from './pages/FacialRecognition/FacialRecognition'
 
-// const PrivateRoute = props => {
-//     const vT = validToken()
-//     return vT ? <Route {...props} /> : window.location.href = '/login'
-// }
-
 export default function MainRoutes(){
     return (
         <Routes>

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import CirculoCentral from '../Components/CirculoCentral'
 import AudioFeedback from '../Components/AudioFeedback'
-import SocketCommands from '../Components/SocketCommands'
-
 export default class VideoDisplay extends Component{
 
 
@@ -20,7 +18,6 @@ export default class VideoDisplay extends Component{
     render(){
         return(
             <div>
-                <SocketCommands/>
                 <div className="page" style={{alignItems: 'center',
                         display: 'flex',
                         flexDirection: 'row',

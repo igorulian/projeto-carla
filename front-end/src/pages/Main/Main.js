@@ -1,33 +1,37 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import CirculoCentral from '../Components/CirculoCentral'
 import './Main.css'
 import AudioFeedback from '../Components/AudioFeedback'
-import SocketCommands from '../Components/SocketCommands'
-
-export default class Main extends Component{
+import io from 'socket.io-client'
 
 
-    render(){
+export default function Main(){
 
-        return(   
-            <>
-                <SocketCommands/>
-                <div className="page" style={{alignItems: 'center',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    boxSizing: 'border-box'}}>
+    const socketio = io('ws://localhost:4000')
 
-                    {/* <div className="teste" style={{width: '40px', height: '40px', color: '#25f', backgroundColor: '#25f'}}/> */}
+    socketio.on('speak', socket => {
+        speak()
+    })
 
-                    <CirculoCentral/>
-                    <AudioFeedback/>
+    function speak(){
+        alert('speaking')
+    }   
 
-                </div>
-            </>
-        )
-    }
+    return(    
+        <>
+            <div className="page" style={{alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                boxSizing: 'border-box'}}>
 
+                {/* <div className="teste" style={{width: '40px', height: '40px', color: '#25f', backgroundColor: '#25f'}}/> */}
 
+                <CirculoCentral/>
+                <AudioFeedback/>
+
+            </div>
+        </>
+    )
 }

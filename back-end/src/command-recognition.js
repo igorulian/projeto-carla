@@ -10,7 +10,6 @@ async function listenCommand(timeout = timeoutSec * 1000){
     let timer;
 
     async function responseHandler(text) {
-      // pauseStream()  
       destroyStream()
       await handleCommand(text)
       resolve()
@@ -43,7 +42,6 @@ async function listenCommand(timeout = timeoutSec * 1000){
         const text = data.results[0].alternatives[0].transcript
         console.log(`🎧 Comando: ${text}`)
 
-        //check.checkText(text)
         responseHandler(text)
 
       }

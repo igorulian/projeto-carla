@@ -7,12 +7,12 @@ export default class AudioFeedback extends Component {
     render(){
         return(
             <>
-                <audio id="audio-element"
+                {/* <audio id="audio-element"
                     preload="true"
                     src={audio}
                     autoPlay
                 >
-                </audio>
+                </audio> */}
                 <div style={{marginLeft: '10px', position: 'absolute', bottom: '0'}}>
                     <AudioSpectrum
                             id={"audio-container"}
