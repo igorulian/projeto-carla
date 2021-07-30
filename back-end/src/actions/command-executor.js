@@ -7,14 +7,11 @@ import { WhatDay } from "../services/what-day.js"
 import { WhatTime } from "../services/what-time.js"
 import { WikipediaSearch } from '../services/wikipedia-search.js'
 import { PlayMusic } from "../services/youtube-player.js"
-import { sendLoading } from "../socket/connection.js"
 import { iniciar, pesquisar, tocar } from "./verbs.js"
 
 
 
 export async function ExecuteCommand(command){
-
-    sendLoading()
 
     const hasWords = words => hasWordsFunction(words,command)
 

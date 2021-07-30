@@ -65,8 +65,12 @@ async function sendComputerUsage(){
     })
 }
 
-export async function sendLoading(){
-    io.emit('loading', 'a')
+export async function sendLoading(bool){
+    io.emit('loading', bool)
+}
+
+export async function sendListeningCommand(bool){
+    io.emit('listeningcommand', bool)
 }
 
 export async function PlayAudioFront(){

@@ -2,6 +2,7 @@ import recorder from 'node-record-lpcm16'
 import {listenCommand} from './command-recognition.js'
 import {SpeechClient} from '@google-cloud/speech'
 import { setListening } from './hardware/controller.js';
+import { sendListeningCommand } from './socket/connection.js';
 
 let isTrigged = false
 
@@ -45,10 +46,12 @@ let isTrigged = false
 
           isTrigged = true
           setListening(true)
+          sendListeningCommand(true)
           
           await listenCommand()
 
           setListening(false)
+          sendListeningCommand(false)
           isTrigged = false
 
           console.log('\n⏰ Aguardando Trigger');

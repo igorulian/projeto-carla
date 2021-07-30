@@ -3,11 +3,12 @@ import CirculoCentral from '../Components/CirculoCentral'
 import './Main.css'
 import AudioSpectrum from 'react-audio-spectrum'
 import {socket} from '../../services/socket'
-import ReactLoading from 'react-loading';
+import ReactLoading from 'react-loading'
 
 export default function Main(){
     const [connected,setconnected] = useState(false)
     const [loading,setLoading] = useState(false)
+    const [listening,setListening] = useState(false)
     const [cpu, setCpu] = useState(0)
     const [ram, setRam] = useState({percent: 0, using:0, total:0})
     let audio = new Audio('')
@@ -30,11 +31,15 @@ export default function Main(){
         })
 
         socket.on('loading', data => {
-            setLoading(true)
+            setLoading(data)
         })
     
         socket.on('connect', () => {
             setconnected(true)
+        })
+
+        socket.on('listeningcommand', data => {
+            setListening(data)
         })
     
         socket.on('disconnect', () => {
@@ -44,7 +49,7 @@ export default function Main(){
 
 
     function reloadAudio(){
-        const url = `http://localhost:4000/audio/${between(1,1000000)}`
+        const url = `http://localhost:4000/audio/${between(1,10000)}`
         audio = new Audio(url)  
         audio.load()
         audio.play()
@@ -75,6 +80,8 @@ export default function Main(){
                 <h1 className={'server-status-text'}> RAM: </h1>
                 <h1 className={'server-status-data'}> {ram.percent}% </h1>
                 <h1 className={'server-status-data'}> {ram.using}G / {ram.total}G </h1>
+                
+                {listening && <h1 className={'server-status-data'}> Ouvindo... </h1> }
             </div>
 
             <CirculoCentral loading={loading}/>
