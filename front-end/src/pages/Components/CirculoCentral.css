@@ -63,7 +63,7 @@
     background-image:none;
     background-repeat:none;
     background-position:0; 
-    display:box;
+    display: flex;
     padding:10px;
     margin:25px;
    
@@ -71,25 +71,23 @@
   
   p{
     z-index: 999;
-    margin-left:68px;
     font-size:30px;
-    margin-top:-26px;
-    color:#fff;/*4db8ff*/
+    color:#fff;
     padding:0px;
-    position:relative;
     letter-spacing: -3px;
     -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
     -moz-animation: neon2 1.5s ease-in-out infinite alternate;
     animation: neon2 1.5s ease-in-out infinite alternate;
-
     text-shadow: 0 0 8px var(--cor-clarinha);
-
     font-family: 'Share Tech Mono', monospace;
-   
   }
+
+  .loading{
+    margin-left: 130px;
+  }
+
   a:hover{
     cursor:pointer;
-     
   }
   
   
@@ -102,13 +100,17 @@
       left: 0; right: 0;
       margin: auto;
       margin-left:43.3%;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
       
   }
+    
   #loader {
     display: block;
     position: relative;
-    left: 50%;
-    top: 50%;
+    left: 57%;
+    top: 57%;
     width: 100%;
     height: 100%;
     margin: -175px 0 0 -175px;

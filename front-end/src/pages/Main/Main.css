@@ -24,6 +24,12 @@
     margin-right: 40px;
 }
 
+.server-data{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .server-status-text{
     font-family: 'Share Tech Mono', monospace;
     color: #707070;
