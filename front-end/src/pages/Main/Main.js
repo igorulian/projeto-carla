@@ -7,6 +7,8 @@ import {socket} from '../../services/socket'
 export default function Main(){
     const [connected,setconnected] = useState(false)
     const [playing,setPlaying] = useState(false)
+    const [cpu, setCpu] = useState(0)
+    const [ram, setRam] = useState({})
 
     
     useEffect(() => {
@@ -24,6 +26,13 @@ export default function Main(){
             }
               
         })
+
+        socket.on('usage', data => {
+            const {cpu, ram} = data
+            console.log(data)
+            setRam(ram)
+            setCpu(cpu)
+        })
     
         socket.on('connect', () => {
             setconnected(true)
@@ -40,6 +49,12 @@ export default function Main(){
         <>
             <h1 className={'server-status-text'}> Server Status: </h1>
             <h1 className={connected ? 'online' : 'offline'}> {connected ? 'Online' : 'Offline'}</h1>
+
+            <h1 className={'server-status-text'}> CPU: </h1>
+            <h1 className={'server-status-data'}> {cpu}% </h1>
+            <h1 className={'server-status-text'}> RAM: </h1>
+            <h1 className={'server-status-data'}> {ram.percent}% </h1>
+            <h1 className={'server-status-data'}> {ram.using}G / {ram.total}G </h1>
 
             <div className="page" style={{
                 alignItems: 'center',
