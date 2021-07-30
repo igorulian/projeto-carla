@@ -21,11 +21,6 @@ const io = new Server(server,{
     }
 })
 
-
-// app.get('/audio/:data', (req, res) => {
-//     ms.pipe(req, res, './src/audio/audio.mp3')
-// })
-
 app.get('/audio/:data', async (req, res) => {
 
     const filePath = './src/audio/audio.mp3'

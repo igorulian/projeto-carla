@@ -9,10 +9,14 @@ async function say(text) {
   
   console.log('\n\x1b[33m%s\x1b[0m',`L.I.N.D.A: ${treatedText}`)
 
-  PlayAudioFront()
-  
-  if(!hasConnections())
+  if(hasConnections){
+    console.log('Conexões encontradas, tocando no front')
+    await PlayAudioFront()
+  }else{
+    console.log('Sem conexões, tocando no back')
     await playAudio()
+  }
+
 }
 
 
