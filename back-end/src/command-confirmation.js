@@ -9,7 +9,7 @@ export async function listenConfirmation(timeout = timeoutSec * 1000){
     let timer;
 
     async function responseHandler(awnser) {
-      pauseStream()
+      destroyStream()
       clearTimeout(timer)
       resolve(awnser)
     }
@@ -56,8 +56,8 @@ export async function listenConfirmation(timeout = timeoutSec * 1000){
       }
       );
 
-      function pauseStream(){
-        recognizeStream.pause()// our pause
+      function destroyStream(){
+        recognizeStream.destroy()
       }
         
       recorder

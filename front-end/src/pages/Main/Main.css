@@ -24,13 +24,31 @@
     margin-right: 40px;
 }
 
+.server-status-text{
+    font-family: 'Share Tech Mono', monospace;
+    color: #707070;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.online {
+    font-family: 'Share Tech Mono', monospace;
+    margin: 10px;
+    font-size: 16px;
+    color: #2c8b0ec5
+}
+
+.offline {
+    font-family: 'Share Tech Mono', monospace;
+    margin: 10px;
+    font-size: 16px;
+    color: #a51616c5
+}
+
 
 html, body, #app, #app>div, root {
     height: 100%;
     background-color: #0f0e0e;
-
-
-
 }
 
 *{

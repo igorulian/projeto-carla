@@ -13,7 +13,7 @@ export default class CirculoCentral extends Component{
                         <div id="loader1"/>
                         
                     </div>
-                    <p style={this.props.txtstyle}>L.I.N.D.A</p>
+                    <p>L.I.N.D.A</p>
                 </div>
             </>
         )

@@ -30,7 +30,8 @@ async function generateIBMAudio(text){
     await textToSpeech.synthesize(synthesizeParams)
       .then(async response => {
         const buffer = response.result
-        await buffer.pipe(fs.createWriteStream(`./src/audio/audio.${format}`));
+
+        await buffer.pipe(fs.createWriteStream(`./src/audio/audio.${format}`))
 
         await new Promise(function(resolve, reject) {
           buffer.on('end', () => {resolve()})

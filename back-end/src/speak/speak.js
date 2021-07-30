@@ -1,5 +1,5 @@
 import { spawn } from 'child_process'
-import { SendSpeak } from '../socket/connection.js'
+import { hasConnections, PlayAudioFront } from '../socket/connection.js'
 import { generateIBMAudio } from './IBMAudio.js'
 
 async function say(text) {
@@ -9,9 +9,10 @@ async function say(text) {
   
   console.log('\n\x1b[33m%s\x1b[0m',`L.I.N.D.A: ${treatedText}`)
 
-  SendSpeak()
+  await PlayAudioFront()
   
-  await playAudio()
+  if(!hasConnections())
+    await playAudio()
 }
 
 

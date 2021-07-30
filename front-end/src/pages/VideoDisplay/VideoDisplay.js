@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import CirculoCentral from '../Components/CirculoCentral'
-import AudioFeedback from '../Components/AudioFeedback'
+
 export default class VideoDisplay extends Component{
 
 
@@ -33,7 +33,6 @@ export default class VideoDisplay extends Component{
                         src={this.state.link}>
                         </iframe> 
                     </div>
-                    <AudioFeedback/>
                 </div>
             </div>
         )

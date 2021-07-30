@@ -9,9 +9,9 @@ let isTrigged = false
   function triggerChecker(){
       const client = new SpeechClient();
 
-      const encoding = 'LINEAR16';
-      const sampleRateHertz = 16000;
-      const languageCode = 'pt-BR';
+      const encoding = 'LINEAR16'
+      const sampleRateHertz = 16000
+      const languageCode = 'pt-BR'
 
       const request = {
           config: {
@@ -25,8 +25,12 @@ let isTrigged = false
       const recognizeStream = client.streamingRecognize(request)
 
       recognizeStream.on('error', (err) => {
-        console.log(err)
-        // return triggerChecker()
+        console.log('RESETANDO...')
+
+        if(!err.toString().includes('load the default credentials'))
+          return triggerChecker()
+        else
+          return console.log('seta as credenciais ai irmão :/ ')
       })
 
       recognizeStream.on('data', async data => {
@@ -47,7 +51,7 @@ let isTrigged = false
           setListening(false)
           isTrigged = false
 
-          console.log('⏰ Aguardando Trigger');
+          console.log('\n⏰ Aguardando Trigger');
         }
 
       })

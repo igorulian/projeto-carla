@@ -3,6 +3,8 @@
 // import dotenv from 'dotenv'
 // dotenv.config()
 
+import { say } from "../speak/speak.js"
+
 // import stream from 'youtube-audio-stream'
 // const decoder = require('lame').Decoder
 // import {Lame} from 'node-lame'
@@ -14,21 +16,21 @@
 
 export async function PlayMusic(command){
     const searchTerm = getSearchTerm(command)
-    console.log(`\n🎵 Tocando ${searchTerm}...`)
+    await say(`\n🎵 Tocando ${searchTerm}...`)
     // const id = await getVideoBySearchTerm(searchTerm)
     // await playVideo('h6ru0vpISkE')
 }
 
 
-// function getSearchTerm(command){
-//     let text = command.treatCommand
-//     text = text.replace('toca', '')
-//     text = text.replace('tocar', '')
-//     text = text.replace('toque', '')
-//     text = text.trim()
-//     ///.... add more later
-//     return text
-// }
+function getSearchTerm(command){
+    let text = command.treatCommand
+    text = text.replace('toca', '')
+    text = text.replace('tocar', '')
+    text = text.replace('toque', '')
+    text = text.trim()
+    ///.... add more later
+    return text
+}
 
 // async function playVideo(id){
 //     const url = `http://youtube.com/watch?v=${id}`
