@@ -1,19 +1,22 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CirculoCentral from '../Components/CirculoCentral'
 import './Main.css'
 import AudioSpectrum from 'react-audio-spectrum'
 import {socket} from '../../services/socket'
+import ReactLoading from 'react-loading';
 
 export default function Main(){
     const [connected,setconnected] = useState(false)
     const [playing,setPlaying] = useState(false)
+    const [loading,setLoading] = useState(false)
     const [cpu, setCpu] = useState(0)
-    const [ram, setRam] = useState({})
+    const [ram, setRam] = useState({percent: 0, using:0, total:0})
 
     
     useEffect(() => {
 
         socket.on('speak', async sck => {
+            setLoading(false)
             const audio = new Audio('http://localhost:4000/audio')
             audio.play()
             setPlaying(true)
@@ -29,9 +32,12 @@ export default function Main(){
 
         socket.on('usage', data => {
             const {cpu, ram} = data
-            console.log(data)
             setRam(ram)
             setCpu(cpu)
+        })
+
+        socket.on('loading', data => {
+            setLoading(true)
         })
     
         socket.on('connect', () => {
@@ -47,6 +53,7 @@ export default function Main(){
 
     return(    
         <>
+
             <h1 className={'server-status-text'}> Server Status: </h1>
             <h1 className={connected ? 'online' : 'offline'}> {connected ? 'Online' : 'Offline'}</h1>
 
@@ -65,6 +72,12 @@ export default function Main(){
                 boxSizing: 'border-box'}}>
 
                 <CirculoCentral/>
+
+                {loading && 
+                    <div>
+                        <ReactLoading type={'bars'} color={'#ccc'} height={40} width={40}/>
+                    </div>
+                }
                 
                 <>
                     <div style={{marginLeft: '10px', position: 'absolute', bottom: '0'}}>
