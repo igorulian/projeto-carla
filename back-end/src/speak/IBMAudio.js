@@ -7,11 +7,17 @@ dotenv.config()
 
 const format = 'mp3'
 
+// const IBMapikey = process.env.IBM_API_KEY
+// const IBMserviceUrl = process.env.IBM_SERVICE_URL
+
+// const IBMapikey = process.env.IBM_API_KEY_2
+// const IBMserviceUrl = process.env.IBM_SERVICE_URL_2
+
 const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({
-    apikey: process.env.IBM_API_KEY,
+    apikey: process.env.IBM_API_KEY_2,
   }),
-  serviceUrl: process.env.IBM_SERVICE_URL,
+  serviceUrl: process.env.IBM_SERVICE_URL_2,
   disableSslVerification: true, 
 });
 
@@ -40,7 +46,7 @@ async function generateIBMAudio(text){
       })
       .catch(err => {
         console.log('error:', err);
-      });
+      })
 
     const finishingDate = new Date()
     const finishingTime = finishingDate.getHours()*3600 + finishingDate.getMinutes()*60 + finishingDate.getSeconds()

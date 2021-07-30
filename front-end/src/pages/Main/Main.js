@@ -11,22 +11,15 @@ export default function Main(){
     const [loading,setLoading] = useState(false)
     const [cpu, setCpu] = useState(0)
     const [ram, setRam] = useState({percent: 0, using:0, total:0})
+    let audio = new Audio('')
 
     
     useEffect(() => {
 
         socket.on('speak', async sck => {
+            audio.pause()
             setLoading(false)
-            const audio = new Audio('http://localhost:4000/audio')
-            audio.play()
-            setPlaying(true)
-
-            audio.onended = () => {
-                alert('CABO')
-                console.log('CABO')
-                setPlaying(false)
-                audio.remove()
-            }
+            reloadAudio()
               
         })
 
@@ -48,6 +41,23 @@ export default function Main(){
             setconnected(false)
         })
     },[])
+
+
+    function reloadAudio(){
+        const url = `http://localhost:4000/audio/${between(1,1000000)}`
+        audio = new Audio(url)
+        console.log('pegando audio com o link:')
+        console.log(url)
+        audio.load()
+        audio.play()
+    }
+
+    function between(min, max) {  
+        return Math.floor(
+          Math.random() * (max - min) + min
+        )
+    }
+    
 
 
 

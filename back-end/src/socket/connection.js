@@ -3,6 +3,10 @@ import {Server} from 'socket.io'
 import http from 'http'
 import ms from 'mediaserver'
 import { getUsage } from './usage.js'
+import util from 'util'
+import fs from 'fs'
+
+const getStat = util.promisify(fs.stat)
 
 
 const port = 4000
@@ -18,9 +22,23 @@ const io = new Server(server,{
 })
 
 
-app.get('/audio', (req, res) => {
-    ms.pipe(req, res, './src/audio/audio.mp3')
-})
+// app.get('/audio/:data', (req, res) => {
+//     ms.pipe(req, res, './src/audio/audio.mp3')
+// })
+
+app.get('/audio/:data', async (req, res) => {
+
+    const filePath = './src/audio/audio.mp3'
+    const stat = await getStat(filePath)
+
+    res.writeHead(200, {
+        'Content-Type': 'audio/mp3',
+        'Content-Length': stat.size
+    });
+
+    const stream = fs.createReadStream(filePath)
+    stream.pipe(res);
+});
 
 
 io.on('connection', socket => {

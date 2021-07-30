@@ -9,7 +9,7 @@ async function say(text) {
   
   console.log('\n\x1b[33m%s\x1b[0m',`L.I.N.D.A: ${treatedText}`)
 
-  await PlayAudioFront()
+  PlayAudioFront()
   
   if(!hasConnections())
     await playAudio()
