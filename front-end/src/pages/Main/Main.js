@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import CirculoCentral from '../Components/CirculoCentral'
-import './Main.css'
+import '../styles.css'
 import AudioSpectrum from 'react-audio-spectrum'
 import {socket} from '../../services/socket'
 import ReactLoading from 'react-loading'
+import {Page, ServerStatus, Status, StatusData, StatusText} from './styles'
 
 export default function Main(){
     const [connected,setconnected] = useState(false)
     const [loading,setLoading] = useState(false)
     const [listening,setListening] = useState(false)
+    const [playing, setPlaying] = useState(false)
     const [cpu, setCpu] = useState(0)
     const [ram, setRam] = useState({percent: 0, using:0, total:0})
     let audio = new Audio('')
@@ -39,6 +41,7 @@ export default function Main(){
         })
 
         socket.on('listeningcommand', data => {
+            console.log('setando listining parta' + data)
             setListening(data)
         })
     
@@ -53,39 +56,37 @@ export default function Main(){
         audio = new Audio(url)  
         audio.load()
         audio.play()
+        setPlaying(true)
+
     }
 
     function between(min, max) {  
         return Math.floor(
           Math.random() * (max - min) + min
         )
-    }
-    
+    }    
 
 
 
     return(
 
-        <div className="page" style={{
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center'}}>
+        <Page>
 
-            <div className="server-data">
-                <h1 className={'server-status-text'}> Server Status: </h1>
-                <h1 className={connected ? 'online' : 'offline'}> {connected ? 'Online' : 'Offline'}</h1>
+            <ServerStatus>
+                <StatusText> Server Status: </StatusText>
+                <Status online={connected}> {connected ? 'Online' : 'Offline'} </Status>
 
-                <h1 className={'server-status-text'}> CPU: </h1>
-                <h1 className={'server-status-data'}> {cpu}% </h1>
-                <h1 className={'server-status-text'}> RAM: </h1>
-                <h1 className={'server-status-data'}> {ram.percent}% </h1>
-                <h1 className={'server-status-data'}> {ram.using}G / {ram.total}G </h1>
-                
-                {listening && <h1 className={'server-status-data'}> Ouvindo... </h1> }
-            </div>
+                <StatusText> CPU: </StatusText>
+                <StatusData> {cpu}% </StatusData>
 
-            <CirculoCentral loading={loading}/>
+                <StatusText> RAM: </StatusText>
+                <StatusData> {ram.percent}% </StatusData>
+                <StatusData> {ram.using}G / {ram.total}G </StatusData>
+            </ServerStatus>
 
-        </div>
+            <CirculoCentral loading={loading} listening={listening}/>
+
+
+        </Page>
     )
 }

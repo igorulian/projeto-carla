@@ -92,19 +92,37 @@
   
   
   #loader-wrapper{
-      position: fixed;
-      width: 300px;
-      height: 300px;
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 0; right: 0;
-      margin: auto;
-      margin-left:43.3%;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    /* top: 0; 
+    bottom: 0; */
+    animation-name: example;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    margin-left:43.3%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
+
+  /* #loader-wrapper-top{
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    animation-name: example;
+    animation-duration: 4s;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    margin-left:43.3%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+} */
     
   #loader {
     display: block;
