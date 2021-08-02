@@ -3,36 +3,27 @@ import CirculoCentral from '../Components/CirculoCentral'
 import '../styles.css'
 import AudioSpectrum from 'react-audio-spectrum'
 import {socket} from '../../services/socket'
-import {Page, Quadrado, CirculoContainer, DisplayContainer} from './styles'
-import YouTube from 'react-youtube';
+import {Page, Quadrado, CirculoContainer} from './styles'
 import Status from './Status';
+import Display from './Display';
 
 export default function Main(){
     const [connected,setconnected] = useState(false)
     const [loading,setLoading] = useState(false)
-    const [display,setDisplay] = useState(false)
+    const [display,setDisplay] = useState({play: false, what: '', props:{}})
     const [listening,setListening] = useState(false)
     const [playing, setPlaying] = useState(false)
     const [usage, setUsage] = useState({cpu: 0, ram: {percent: 0, using:0, total:0}})
     let audio = new Audio('')
 
-    const youtubeOpts = {
-        height: '720',
-        width: '1280',
-        playerVars: {
-            autoplay: 1
-        }
-    }
-
     
     useEffect(() => {
 
         setTimeout(() => {
-            setDisplay(true)
+            setDisplay({play:true, what: 'youtube', props:{id: 'cIliVkpvVZw'}})
         },3000)
 
         socket.on('speak', async sck => {
-            console.log('Socket recebido')
             audio.pause()
             setLoading(false)
             reloadAudio()
@@ -49,9 +40,16 @@ export default function Main(){
         socket.on('connect', () => {
             setconnected(true)
         })
+        
+        socket.on('stopdisplay', () => {
+            setDisplay({play:false})
+        })
+
+        socket.on('playyoutube', data => {
+            setDisplay({play:true, what: 'youtube', props: {id: data.id}})
+        })
 
         socket.on('listeningcommand', data => {
-            console.log('setando listining parta' + data)
             setListening(data)
         })
     
@@ -66,6 +64,7 @@ export default function Main(){
         audio = new Audio(url)  
         audio.load()
         audio.play()
+        alert(audio.duration)
         setPlaying(true)
 
     }
@@ -88,9 +87,7 @@ export default function Main(){
                 <CirculoCentral loading={loading}/>
             </CirculoContainer>
 
-            {display && <DisplayContainer>
-                <YouTube videoId={'cIliVkpvVZw'} opts={youtubeOpts} onEnd={() => {setDisplay(false)}} pla/>
-            </DisplayContainer>}
+            <Display display={display} onEnd={() => {setDisplay(false)}}/>
 
         </Page>
     )
