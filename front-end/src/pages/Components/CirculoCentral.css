@@ -8,67 +8,6 @@
     --cor-clarinha: #ffc100;
   }
   
-  
-  .container{
-    display: flex;
-     flex-direction: row;
-  }
-  .container div:first-child(1){
-    background-color:#ccffcc;
-    flex: 1;
-    height:100px;
-    width:100px;
-    text-align: center;
-    
-  }
-  .first {
-    -webkit-flex: 1;
-    flex: 1;
-    
-  }
-  .second {
-    -webkit-flex: 2;
-    flex: 2;
-   
-  }
-  .third {
-    -webkit-flex: 1;
-    flex: 1;
-  }
-  #lnav{
-    display:none;
-  }
-  #rnav{
-    display:none;
-  }
-  .nav ul li a{
-    text-decoration: none; 
-    color: var(--cor-clarinha);
-    text-shadow: 0 0 15px var(--cor-clara);
-    border: 1px solid var(--cor-clarinha);
-    padding:10px;
-    margin:10px;
-
-    box-shadow: 0 0 5px var(--cor-clara);
-
-  }
-  .navr{
-    
-    text-align:right;
-    
-    
-  }
-  nav ul li{
-    list-style:none;
-    background-image:none;
-    background-repeat:none;
-    background-position:0; 
-    display: flex;
-    padding:10px;
-    margin:25px;
-   
-  }
-  
   p{
     z-index: 999;
     font-size:30px;
@@ -92,37 +31,15 @@
   
   
   #loader-wrapper{
-    position: fixed;
     width: 300px;
     height: 300px;
-    position: absolute;
-    /* top: 0; 
-    bottom: 0; */
-    animation-name: example;
     left: 0; 
     right: 0;
     margin: auto;
-    margin-left:43.3%;
     align-items: center;
     justify-content: center;
     text-align: center;
   }
-
-  /* #loader-wrapper-top{
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    position: absolute;
-    animation-name: example;
-    animation-duration: 4s;
-    left: 0; 
-    right: 0;
-    margin: auto;
-    margin-left:43.3%;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-} */
     
   #loader {
     display: block;
@@ -138,8 +55,8 @@
     border-bottom-color: var(--cor-clarinha);
     border-right-color: var(--cor-clara);
     border-left-color: var(--cor-clarinha);
-
     box-shadow: 0 0 15px var(--cor-media);
+
    
     -webkit-animation: spin 30s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
     animation: spin 30s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */

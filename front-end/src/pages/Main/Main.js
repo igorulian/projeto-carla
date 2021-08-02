@@ -3,33 +3,43 @@ import CirculoCentral from '../Components/CirculoCentral'
 import '../styles.css'
 import AudioSpectrum from 'react-audio-spectrum'
 import {socket} from '../../services/socket'
-import ReactLoading from 'react-loading'
-import {Page, ServerStatus, Status, StatusData, StatusText} from './styles'
+import {Page, Quadrado, CirculoContainer, DisplayContainer} from './styles'
+import YouTube from 'react-youtube';
+import Status from './Status';
 
 export default function Main(){
     const [connected,setconnected] = useState(false)
     const [loading,setLoading] = useState(false)
+    const [display,setDisplay] = useState(false)
     const [listening,setListening] = useState(false)
     const [playing, setPlaying] = useState(false)
-    const [cpu, setCpu] = useState(0)
-    const [ram, setRam] = useState({percent: 0, using:0, total:0})
+    const [usage, setUsage] = useState({cpu: 0, ram: {percent: 0, using:0, total:0}})
     let audio = new Audio('')
+
+    const youtubeOpts = {
+        height: '720',
+        width: '1280',
+        playerVars: {
+            autoplay: 1
+        }
+    }
 
     
     useEffect(() => {
+
+        setTimeout(() => {
+            setDisplay(true)
+        },3000)
 
         socket.on('speak', async sck => {
             console.log('Socket recebido')
             audio.pause()
             setLoading(false)
             reloadAudio()
-              
         })
 
         socket.on('usage', data => {
-            const {cpu, ram} = data
-            setRam(ram)
-            setCpu(cpu)
+            setUsage(data)
         })
 
         socket.on('loading', data => {
@@ -72,20 +82,15 @@ export default function Main(){
 
         <Page>
 
-            <ServerStatus>
-                <StatusText> Server Status: </StatusText>
-                <Status online={connected}> {connected ? 'Online' : 'Offline'} </Status>
+            <Status usage={usage} connected={connected}/>
 
-                <StatusText> CPU: </StatusText>
-                <StatusData> {cpu}% </StatusData>
+            <CirculoContainer display={display} listening={listening}>
+                <CirculoCentral loading={loading}/>
+            </CirculoContainer>
 
-                <StatusText> RAM: </StatusText>
-                <StatusData> {ram.percent}% </StatusData>
-                <StatusData> {ram.using}G / {ram.total}G </StatusData>
-            </ServerStatus>
-
-            <CirculoCentral loading={loading} listening={listening}/>
-
+            {display && <DisplayContainer>
+                <YouTube videoId={'cIliVkpvVZw'} opts={youtubeOpts} onEnd={() => {setDisplay(false)}} pla/>
+            </DisplayContainer>}
 
         </Page>
     )

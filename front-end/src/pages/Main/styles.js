@@ -1,4 +1,45 @@
-import styled from "styled-components"
+import styled, { css, keyframes } from "styled-components"
+import {slideInUp,slideInDown, fadeIn, fadeOut} from 'react-animations';
+
+const animUP = keyframes`${slideInUp}`
+const animDown = keyframes`${slideInDown}`
+const animfadeIn = keyframes`${fadeIn}`
+const animfadefadeOut = keyframes`${fadeOut}`
+
+const CirculoContainer = styled.div`
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: ${props => props.listening ? '1' : '0.4'};
+    transition: opacity 0.2s ease-in;
+    transform: ${props => props.display ? 'scale(0.5)' : 'scale(1)'};
+    ${props => props.display ? 'margin-top: -40px' : ''};
+    ${props => props.display ? 'top: 0' : ''};
+    animation: ${props => props.display ? css`1s ${animUP}` :  css`1s ${animDown}` }
+`;
+
+
+const DisplayContainer = styled.div`
+    width: 1280px;
+    height: 720px;
+    border-width: 2px;
+    border-color: #ffc100;
+    border-style: solid;
+    box-shadow: 0 0 15px #ff7400;
+    animation:  2s ${animfadeIn}
+`
+
+const Quadrado = styled.div`
+    width: 200px;
+    height: 200px;
+    background-color: #333;
+`
 
 const Page = styled.div`
     height: 100vh;
@@ -10,33 +51,4 @@ const Page = styled.div`
     justify-content: center;
 `
 
-const ServerStatus = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-`
-
-const StatusText = styled.h1`
-    font-family: 'Share Tech Mono', monospace;
-    color: #707070;
-    font-size: 16px;
-    margin: 10px;
-    margin-top: 30px;
-`
-
-const Status = styled.h1`
-    font-family: 'Share Tech Mono', monospace;
-    margin: 10px;
-    font-size: 16px;
-    color: ${props => props.online ? '#2c8b0ec5' : '#a51616c5'}
-`
-
-const StatusData = styled.h1`
-    font-family: 'Share Tech Mono', monospace;
-    color: #707070;
-    font-size: 13px;
-    margin: 10px;
-`
-
-
-export {Page, ServerStatus, StatusText, StatusData,Status}
+export {Page, CirculoContainer,Quadrado,DisplayContainer}
