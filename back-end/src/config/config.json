@@ -2,7 +2,7 @@
     "weather":{
         "doFirstUpdate": false,
         "updateAfterTime": true,
-        "verificationDelay": 10       
+        "verificationDelay": 30       
     },
     "wakeup": {
         "enable": true,
