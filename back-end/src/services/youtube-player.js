@@ -17,7 +17,7 @@ import { say } from "../speak/speak.js"
 
 export async function PlayMusic(command){
     if(!hasConnections())
-        return await say('Desculpe, não consegui encontrar nenhuma tela para tocar a musica.')
+        return await say('Desculpe, não consegui encontrar nenhuma tela para tocar a música.')
 
     const searchTerm = getSearchTerm(command)
     await say(`\n🎵 Tocando ${searchTerm}...`)
