@@ -6,8 +6,8 @@ import { WeatherForecast } from "../services/weather.js"
 import { WhatDay } from "../services/what-day.js"
 import { WhatTime } from "../services/what-time.js"
 import { WikipediaSearch } from '../services/wikipedia-search.js'
-import { PlayMusic } from "../services/youtube-player.js"
-import { iniciar, pesquisar, tocar } from "./verbs.js"
+import { PlayMusic, StopMusic } from "../services/youtube-player.js"
+import { iniciar, parar, pesquisar, tocar } from "./verbs.js"
 
 
 
@@ -39,6 +39,10 @@ export async function ExecuteCommand(command){
 
     if(hasWords([tocar]))
         return PlayMusic(command)
+
+//para música
+    if(hasWords([parar, ['musica', 'música']]))
+        return StopMusic(command)
 
     //chat
 

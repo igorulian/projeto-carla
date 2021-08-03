@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React from 'react';
 import './CirculoCentral.css'
 import ReactLoading from 'react-loading'
 

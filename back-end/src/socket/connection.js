@@ -40,7 +40,11 @@ io.on('connection', socket => {
     console.log('\n🔗 Nova instancia conectada')
 
     connections++
-    socket.on('disconnect', () => connections--)
+    console.log(`🔗 +Total: ${connections}`)   
+    socket.on('disconnect', () => {
+        connections--
+        console.log(`🔗 -Total: ${connections}`)    
+    })
 })
 
 export function hasConnections(){
@@ -75,6 +79,14 @@ export async function sendListeningCommand(bool){
 
 export async function PlayAudioFront(){
     io.emit('speak', 'a')
+}
+
+export async function PlayYoutubeVideo(id){
+    io.emit('playyoutube', {id})
+}
+
+export async function StopYoutubeVideo(){
+    io.emit('stopyoutube', 'a')
 }
 
 export async function SetupSocket(){

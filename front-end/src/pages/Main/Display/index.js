@@ -4,9 +4,11 @@ import { DisplayContainer } from './styles';
 
 export default function Display(props){
     const {play,what} = props.display
+
+    console.log("aqui")
     
     if(!play) 
-        return <> </>
+        return <div> </div>
 
     const youtubeOpts = {
         height: '720',
@@ -16,18 +18,12 @@ export default function Display(props){
         }
     }
 
-    const Content = () => { //'cIliVkpvVZw'
-        switch(what){
-            case 'youtube':
-                return  <YouTube videoId={props.display.props.id} opts={youtubeOpts} onEnd={props.onEnd}/>
-            break;
-        }
-    }
-
-
     return(
         <DisplayContainer>
-            <Content/>
+            {
+                what === 'youtube' &&
+                <YouTube videoId={props.display.props.id} opts={youtubeOpts} onEnd={props.onEnd}/>
+            }
         </DisplayContainer>
     )
 

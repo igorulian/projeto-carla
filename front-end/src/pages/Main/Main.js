@@ -3,7 +3,7 @@ import CirculoCentral from '../Components/CirculoCentral'
 import '../styles.css'
 import AudioSpectrum from 'react-audio-spectrum'
 import {socket} from '../../services/socket'
-import {Page, Quadrado, CirculoContainer} from './styles'
+import {Page, CirculoContainer} from './styles'
 import Status from './Status';
 import Display from './Display';
 
@@ -15,13 +15,8 @@ export default function Main(){
     const [playing, setPlaying] = useState(false)
     const [usage, setUsage] = useState({cpu: 0, ram: {percent: 0, using:0, total:0}})
     let audio = new Audio('')
-
     
     useEffect(() => {
-
-        setTimeout(() => {
-            setDisplay({play:true, what: 'youtube', props:{id: 'cIliVkpvVZw'}})
-        },3000)
 
         socket.on('speak', async sck => {
             audio.pause()
@@ -47,10 +42,19 @@ export default function Main(){
 
         socket.on('playyoutube', data => {
             setDisplay({play:true, what: 'youtube', props: {id: data.id}})
+            console.log({play:true, what: 'youtube', props: {id: data.id}})
+        })
+
+        socket.on('stopyoutube', () => {
+            setDisplay({play:false})
         })
 
         socket.on('listeningcommand', data => {
             setListening(data)
+            
+            setTimeout(() => {
+                setListening(false)
+            }, 10000)
         })
     
         socket.on('disconnect', () => {
@@ -64,7 +68,6 @@ export default function Main(){
         audio = new Audio(url)  
         audio.load()
         audio.play()
-        alert(audio.duration)
         setPlaying(true)
 
     }

@@ -3,6 +3,7 @@
 // import dotenv from 'dotenv'
 // dotenv.config()
 
+import { hasConnections, PlayYoutubeVideo, StopYoutubeVideo } from "../socket/connection.js"
 import { say } from "../speak/speak.js"
 
 // import stream from 'youtube-audio-stream'
@@ -15,10 +16,18 @@ import { say } from "../speak/speak.js"
 // // const youtubeApiKey = process.env.YOUTUBE_API_KEY.toString()
 
 export async function PlayMusic(command){
+    if(!hasConnections())
+        return await say('Desculpe, não consegui encontrar nenhuma tela para tocar a musica.')
+
     const searchTerm = getSearchTerm(command)
     await say(`\n🎵 Tocando ${searchTerm}...`)
     // const id = await getVideoBySearchTerm(searchTerm)
-    // await playVideo('h6ru0vpISkE')
+    PlayYoutubeVideo('h6ru0vpISkE')
+}
+
+export async function StopMusic(command){
+    console.log('Parando musica...')
+    StopYoutubeVideo()
 }
 
 
@@ -31,15 +40,6 @@ function getSearchTerm(command){
     ///.... add more later
     return text
 }
-
-// async function playVideo(id){
-//     const url = `http://youtube.com/watch?v=${id}`
-//     console.log("PLAY : " + url)
-
-//     stream(url)
-//     .pipe(lame.decode())
-//     .pipe(speaker())
-// }
 
 // // function stopVideo(){
 
