@@ -1,30 +1,27 @@
 import React from 'react'
 import YouTube from 'react-youtube';
 import { DisplayContainer } from './styles';
+import Webcam from "react-webcam";
 
 export default function Display(props){
     const {play,what} = props.display
 
-    console.log("aqui")
-    
     if(!play) 
-        return <div> </div>
+        return <div/>
 
-    const youtubeOpts = {
-        height: '720',
-        width: '1280',
-        playerVars: {
-            autoplay: 1
-        }
-    }
+    const WebcamComponent = () => <Webcam width={1280} height={720}/>;
 
     return(
+        <>
         <DisplayContainer>
-            {
-                what === 'youtube' &&
-                <YouTube videoId={props.display.props.id} opts={youtubeOpts} onEnd={props.onEnd}/>
+            {what === 'youtube' &&
+                <iframe width="1280" height="720" src={`https://www.youtube.com/embed/?listType=playlist&list=${props.display.props.id}&autoplay=1`} frameborder="0" autoplay/>
+            }
+            {what === 'webcam' &&
+                <Webcam width={1280} height={720}/>
             }
         </DisplayContainer>
+        </>
     )
 
 }

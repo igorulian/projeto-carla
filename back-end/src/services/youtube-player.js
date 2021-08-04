@@ -1,5 +1,5 @@
 import axios from "axios"
-import { hasConnections, PlayYoutubeVideo, StopYoutubeVideo } from "../socket/connection.js"
+import { DisplayYoutubeVideo, hasConnections } from "../socket/connection.js"
 import { say } from "../speak/speak.js"
 import dotenv from 'dotenv'
 import { response } from "express"
@@ -13,12 +13,12 @@ export async function PlayMusic(command){
     const searchTerm = getSearchTerm(command)
     await say(`\n🎵 Tocando ${searchTerm}...`)
     const id = await getPlaylistID(searchTerm)
-    PlayYoutubeVideo(id)
+    DisplayYoutubeVideo({play:true, id})
 }
 
 export async function StopMusic(command){
     console.log('Parando musica...')
-    StopYoutubeVideo()
+    DisplayYoutubeVideo({play:false})
 }
 
 

@@ -17,11 +17,11 @@ const CirculoContainer = styled.div`
     opacity: ${props => props.listening ? '1' : '0.4'};
     transition: opacity 0.2s ease-in;
     transform: ${props => props.display.play ? 'scale(0.5)' : 'scale(1)'};
-    ${props => props.display.play ? 'margin-top: -40px' : ''};
+    ${props => props.display.play ? 'margin-top: -40px' : 'margin-top: -20px'};
     ${props => props.display.play ? 'top: 0' : ''};
     animation: ${props => props.display.play ? css`1s ${animUP}` :  css`1s ${animDown}` }
-`;
-
+    `
+    
 const Quadrado = styled.div`
     width: 200px;
     height: 200px;
@@ -38,4 +38,10 @@ const Page = styled.div`
     justify-content: center;
 `
 
-export {Page, CirculoContainer,Quadrado}
+const SpeakingText = styled.p`
+    margin-bottom: 30px;
+    font-size: 15px;
+    text-shadow: 0 0 40px #ff9a00;
+`
+
+export {Page, CirculoContainer,Quadrado,SpeakingText}

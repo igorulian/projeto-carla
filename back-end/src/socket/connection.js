@@ -80,13 +80,13 @@ export async function sendListeningCommand(bool){
 export async function PlayAudioFront(){
     io.emit('speak', 'a')
 }
-
-export async function PlayYoutubeVideo(id){
-    io.emit('playyoutube', {id})
+ 
+export async function DisplayMirror(data){ // {play: true}
+    io.emit('mirror', data)
 }
 
-export async function StopYoutubeVideo(){
-    io.emit('stopyoutube', 'a')
+export async function DisplayYoutubeVideo(data){
+    io.emit('youtube', data)
 }
 
 export async function SetupSocket(){

@@ -3,7 +3,7 @@ import CirculoCentral from '../Components/CirculoCentral'
 import '../styles.css'
 import AudioSpectrum from 'react-audio-spectrum'
 import {socket} from '../../services/socket'
-import {Page, CirculoContainer} from './styles'
+import {Page, CirculoContainer,SpeakingText} from './styles'
 import Status from './Status';
 import Display from './Display';
 
@@ -11,6 +11,7 @@ export default function Main(){
     const [connected,setconnected] = useState(false)
     const [loading,setLoading] = useState(false)
     const [display,setDisplay] = useState({play: false, what: '', props:{}})
+    const [speakingText,setSpeakingText] = useState('')
     const [listening,setListening] = useState(false)
     const [playing, setPlaying] = useState(false)
     const [usage, setUsage] = useState({cpu: 0, ram: {percent: 0, using:0, total:0}})
@@ -40,13 +41,12 @@ export default function Main(){
             setDisplay({play:false})
         })
 
-        socket.on('playyoutube', data => {
-            setDisplay({play:true, what: 'youtube', props: {id: data.id}})
-            console.log({play:true, what: 'youtube', props: {id: data.id}})
+        socket.on('mirror', data => {
+            setDisplay({play: data.play, what: 'webcam'})
         })
 
-        socket.on('stopyoutube', () => {
-            setDisplay({play:false})
+        socket.on('youtube', data => {
+            setDisplay({play: data.play, what: 'youtube', props: {id: data.id?data.id:'PLUvfp5G8vYak5JTMxQSMSsKurdBEzKUr3'}})
         })
 
         socket.on('listeningcommand', data => {
@@ -83,10 +83,10 @@ export default function Main(){
     return(
 
         <Page>
-
             <Status usage={usage} connected={connected}/>
 
             <CirculoContainer display={display} listening={listening}>
+                {/* <SpeakingText> Coloca n sei</SpeakingText> */}
                 <CirculoCentral loading={loading}/>
             </CirculoContainer>
 

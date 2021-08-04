@@ -1,5 +1,6 @@
 import { HowAreYouDoing, IamBack, IllLeave, ShouldILeave, WhoAreYou } from "../services/chat.js"
 import { DolarQuote } from "../services/dollar-quote.js"
+import { Mirror } from "../services/Mirror.js"
 import { Timer } from "../services/timer.js"
 import { TranslateText } from "../services/translate.js"
 import { WeatherForecast } from "../services/weather.js"
@@ -40,7 +41,7 @@ export async function ExecuteCommand(command){
     if(hasWords([tocar]))
         return PlayMusic(command)
 
-//para música
+    //para música
     if(hasWords([parar, ['musica', 'música']]))
         return StopMusic(command)
 
@@ -60,6 +61,9 @@ export async function ExecuteCommand(command){
 
     if(hasWords([['voltei', 'cheguei']]))
         return await IamBack(command)
+
+    if(hasWords(['espelho']))
+        return await Mirror(command)
 
     if(hasWords([pesquisar]))
         return await WikipediaSearch(command)
