@@ -49,8 +49,7 @@ let isTrigged = false
           sendListeningCommand(true)
           
           await listenCommand()
-
-          setListening(false)
+          
           sendListeningCommand(false)
           isTrigged = false
 

@@ -41,7 +41,6 @@ export async function listenConfirmation(timeout = timeoutSec * 1000){
         if(isPaused) responseHandler()
 
         const text = data.results[0].alternatives[0].transcript
-        console.log(text)
 
         if(text.toLowerCase().includes('sim') || text.toLowerCase().includes('por favor') || text.toLowerCase().includes('porfavor'))
             return responseHandler(true)

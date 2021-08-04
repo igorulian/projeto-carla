@@ -1,6 +1,7 @@
 import recorder from 'node-record-lpcm16'
 import {SpeechClient} from '@google-cloud/speech'
 import {handleCommand} from './command-handler.js'
+import { setListening } from './hardware/controller.js'
 
 const timeoutSec = 20
 
@@ -11,6 +12,7 @@ async function listenCommand(timeout = timeoutSec * 1000){
 
     async function responseHandler(text) {
       destroyStream()
+      setListening(false)
       await handleCommand(text)
       resolve()
       clearTimeout(timer)

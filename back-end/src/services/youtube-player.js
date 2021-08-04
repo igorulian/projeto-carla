@@ -27,6 +27,9 @@ function getSearchTerm(command){
     text = text.replace('toca', '')
     text = text.replace('tocar', '')
     text = text.replace('toque', '')
+    text = text.replace('colocar', '')
+    text = text.replace('coloque', '')
+    text = text.replace('coloca', '')
     text = text.trim()
     ///.... add more later
     return text
