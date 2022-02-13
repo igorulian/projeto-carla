@@ -7,16 +7,9 @@ async function say(text) {
   
   await generateIBMAudio(treatedText)
   
-  console.log('\n\x1b[33m%s\x1b[0m',`L.I.N.D.A: ${treatedText}`)
-
-  if(hasConnections()){
-    console.log('Conexões encontradas, tocando no front')
-    await PlayAudioFront()
-  }else{
-    console.log('Sem conexões, tocando no back')
-    await playAudio()
-  }
-
+  console.log('\n\x1b[33m%s\x1b[0m',`L.I.N.D.A: ${text}`)
+  await playAudio()
+  // await playAudioNode()
 }
 
 

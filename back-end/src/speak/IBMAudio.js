@@ -3,6 +3,9 @@ import util from 'util'
 import TextToSpeechV1 from 'ibm-watson/text-to-speech/v1.js'
 import {IamAuthenticator} from 'ibm-watson/auth/index.js'
 import dotenv from 'dotenv'
+import play from 'audio-play'
+import createBuffer from 'audio-buffer-from'
+
 dotenv.config()
 
 const format = 'mp3'
@@ -15,9 +18,9 @@ const format = 'mp3'
 
 const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({
-    apikey: process.env.IBM_API_KEY_2,
+    apikey: process.env.IBM_API_KEY,
   }),
-  serviceUrl: process.env.IBM_SERVICE_URL_2,
+  serviceUrl: process.env.IBM_SERVICE_URL,
   disableSslVerification: true, 
 });
 

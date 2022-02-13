@@ -1,14 +1,14 @@
 import recorder from 'node-record-lpcm16'
 import {listenCommand} from './command-recognition.js'
 import {SpeechClient} from '@google-cloud/speech'
-import { setListening } from './hardware/controller.js';
-import { sendListeningCommand } from './socket/connection.js';
+import { setListening } from './hardware/controller.js'
+import { sendListeningCommand } from './socket/connection.js'
 
 let isTrigged = false
 
 
   function triggerChecker(){
-      const client = new SpeechClient();
+      const client = new SpeechClient()
 
       const encoding = 'LINEAR16'
       const sampleRateHertz = 16000
@@ -53,7 +53,7 @@ let isTrigged = false
           sendListeningCommand(false)
           isTrigged = false
 
-          console.log('\n⏰ Aguardando Trigger');
+          console.log('\n⏰ Aguardando Trigger')
         }
 
       })
@@ -70,7 +70,7 @@ let isTrigged = false
         .on('error', console.error)
         .pipe(recognizeStream);
         
-      console.log('⏰ Aguardando Trigger');
+      console.log('⏰ Aguardando Trigger')
   }
 
 export {triggerChecker}
