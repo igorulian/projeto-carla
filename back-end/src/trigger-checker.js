@@ -27,7 +27,7 @@ let isTrigged = false
 
       recognizeStream.on('error', (err) => {
         console.log('RESETANDO...')
-
+        
         if(!err.toString().includes('load the default credentials'))
           return triggerChecker()
         else
