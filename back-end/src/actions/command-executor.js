@@ -1,3 +1,4 @@
+import { IA } from "../ai/index.js"
 import { HowAreYouDoing, IamBack, IllLeave, ShouldILeave, WhoAreYou } from "../services/chat.js"
 import { DolarQuote } from "../services/dollar-quote.js"
 import { Mirror } from "../services/Mirror.js"
@@ -44,29 +45,32 @@ export async function ExecuteCommand(command){
     //para música
     if(hasWords([parar, ['musica', 'música']]))
         return StopMusic(command)
+        
+    //IA
+    await IA(command)
 
     //chat
 
-    if(hasWords(['quem', 'é', 'você']))
-        return await WhoAreYou(command)
+    // if(hasWords(['quem', 'é', 'você']))
+    //     return await WhoAreYou(command)
 
-    if(hasWords(['como', 'você', ['está', 'tá']]))
-        return await HowAreYouDoing(command)
+    // if(hasWords(['como', 'você', ['está', 'tá']]))
+    //     return await HowAreYouDoing(command)
         
-    if(hasWords(['vou', ['sair', 'festa']]))
-        return await IllLeave(command)
+    // if(hasWords(['vou', ['sair', 'festa']]))
+    //     return await IllLeave(command)
         
-    if(hasWords([['será', 'devo'], 'eu', ['saio', 'sair', 'festa']]))
-        return await ShouldILeave(command)
+    // if(hasWords([['será', 'devo'], 'eu', ['saio', 'sair', 'festa']]))
+    //     return await ShouldILeave(command)
 
-    if(hasWords([['voltei', 'cheguei']]))
-        return await IamBack(command)
+    // if(hasWords([['voltei', 'cheguei']]))
+    //     return await IamBack(command)
 
-    if(hasWords(['espelho']))
-        return await Mirror(command)
+    // if(hasWords(['espelho']))
+    //     return await Mirror(command)
 
-    if(hasWords([pesquisar]))
-        return await WikipediaSearch(command)
+    // if(hasWords([pesquisar]))
+    //     return await WikipediaSearch(command)
 }
 
 
