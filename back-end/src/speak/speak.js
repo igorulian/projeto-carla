@@ -1,6 +1,10 @@
 import { spawn } from 'child_process'
 import { hasConnections, PlayAudioFront } from '../socket/connection.js'
 import { generateIBMAudio } from './IBMAudio.js'
+import Player from 'play-sound'
+
+
+const player = Player()
 
 async function say(text) {
   const treatedText = treatText(text)
@@ -8,8 +12,9 @@ async function say(text) {
   await generateIBMAudio(treatedText)
   
   console.log('\n\x1b[33m%s\x1b[0m',`L.I.N.D.A: ${text}`)
-  await playAudio()
-  // await playAudioNode()
+  // await playAudio()
+  await playAudioNode()
+  // console.log("n vou tocar por aqui")
 }
 
 
@@ -22,14 +27,23 @@ function treatText(text){
 }
 
 
+export async function playAudioNode(){
+  console.log("Playing on nodejs")
+  player.play('./src/audio/audio.mp3', (err) => {
+    if (err) throw err
+  })
+}
+
 async function playAudio() {
   const child = spawn("python",['./src/speak/play.py', ''])
 
   await new Promise(resolve => {
-      child.on('close', resolve);
+      child.on('close', () => {
+        console.log('clonse')
+        resolve()
+      });
+      return
   })
-
-  return
 }
 
 

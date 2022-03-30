@@ -11,9 +11,9 @@ function isAQuestion(answer){
 
 
 export async function IA(question){
-        const englishQuestion = await translateToEnglish(question.fullCommand)
-        const answer = await getAIAnswer(englishQuestion)
-        const translatedAnswer = await translateToPortuguese(answer)
-        console.log('Question: ', isAQuestion(translatedAnswer))
-        await say(translatedAnswer)
+    const englishQuestion = await translateToEnglish(question.fullCommand)
+    const answer = await getAIAnswer(englishQuestion)
+    const translatedAnswer = await translateToPortuguese(answer)
+    console.log('Question: ', isAQuestion(translatedAnswer))
+    await say(translatedAnswer)
 }

@@ -3,18 +3,10 @@ import util from 'util'
 import TextToSpeechV1 from 'ibm-watson/text-to-speech/v1.js'
 import {IamAuthenticator} from 'ibm-watson/auth/index.js'
 import dotenv from 'dotenv'
-import play from 'audio-play'
-import createBuffer from 'audio-buffer-from'
 
 dotenv.config()
 
 const format = 'mp3'
-
-// const IBMapikey = process.env.IBM_API_KEY
-// const IBMserviceUrl = process.env.IBM_SERVICE_URL
-
-// const IBMapikey = process.env.IBM_API_KEY_2
-// const IBMserviceUrl = process.env.IBM_SERVICE_URL_2
 
 const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({
@@ -38,6 +30,11 @@ async function generateIBMAudio(text){
     
     await textToSpeech.synthesize(synthesizeParams)
       .then(async response => {
+        const finishingDate = new Date()
+        const finishingTime = finishingDate.getHours()*3600 + finishingDate.getMinutes()*60 + finishingDate.getSeconds()
+    
+        const totalTime = finishingTime - startingTime
+        console.log(`🔊 Response em: ${totalTime} s`)
         const buffer = response.result
 
         await buffer.pipe(fs.createWriteStream(`./src/audio/audio.${format}`))
